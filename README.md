@@ -1,6 +1,10 @@
 # pnlp
 This is a pre-processing tool for NLP.
 
+## Install
+
+`pip install pnlp`
+
 ## Usage Examples
 
 ### iopipe
