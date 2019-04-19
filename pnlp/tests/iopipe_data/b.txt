@@ -1,0 +1,3 @@
+line 1 in b.
+line 2 in b.
+line 3 in b.
