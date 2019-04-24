@@ -1,16 +1,16 @@
 import os
 import sys
-import pathlib
 import pytest
 import types
 
 ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(ROOT_PATH)
 
-from iopipe import write_json, write_file
-from iopipe import Reader, read_file, read_lines, read_json, read_yml
+from piop import write_json, write_file
+from piop import Reader, read_file, read_lines, read_json, read_yml
+from piop import check_dir
 
-DATA_PATH = os.path.join(ROOT_PATH, 'tests', 'iopipe_data')
+DATA_PATH = os.path.join(ROOT_PATH, 'tests', 'piop_data')
 
 
 @pytest.fixture(params=['*.md', '*.txt', '*.data', 'f*.*', '*c.*'])
@@ -68,7 +68,6 @@ def get_read_data():
 
 
 def test_read_file(get_read_data):
-    print(get_read_data)
     data = read_file(get_read_data)
     assert data == 'line 1 in c.\nline 2 in c.\nline 3 in c.'
     assert type(data) == str
@@ -106,6 +105,9 @@ def test_write_json():
 def test_write_file():
     data = ['line 1 of outfile.', '这是 outfile 的第二行。']
     write_file(os.path.join(DATA_PATH, 'outfile.file'), data)
+
+def test_check_dir():
+    assert check_dir(DATA_PATH) == None
 
 
 if __name__ == '__main__':

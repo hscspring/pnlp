@@ -10,7 +10,7 @@ This is a pre-processing tool for NLP.
 ### iopipe
 
 ```bash
-tree tests/iopipe_data/
+tree tests/piop_data/
 ├── a.md
 ├── b.txt
 ├── c.data
@@ -30,13 +30,13 @@ tree tests/iopipe_data/
 
 ```python
 import os
-from pnlp import iopipe as ip
+from pnlp import piop
 
-DATA_PATH = "./pnlp/tests/iopipe_data/"
+DATA_PATH = "./pnlp/tests/piop_data/"
 pattern = '*.md' # also could be '*.txt', 'f*.*', etc.
 
 # Get lines of all files in one directory with line index and file name
-for line in ip.Reader(DATA_PATH, pattern):
+for line in piop.Reader(DATA_PATH, pattern):
     print(line.lid, line.fname, line.text)
 """
 0 a.md line 1 in a.
@@ -48,7 +48,7 @@ for line in ip.Reader(DATA_PATH, pattern):
 """
 
 # Get lines of one file lines with line index and file name
-for line in ip.Reader(os.path.join(DATA_PATH, "a.md")):
+for line in piop.Reader(os.path.join(DATA_PATH, "a.md")):
     print(line.lid, line.fname, line.text)
 """
 0 a.md line 1 in a.
@@ -57,17 +57,17 @@ for line in ip.Reader(os.path.join(DATA_PATH, "a.md")):
 """
 
 # Get all filepaths in one directory
-for path in ip.Reader.gen_files(DATA_PATH, pattern):
+for path in piop.Reader.gen_files(DATA_PATH, pattern):
     print(path)
 """
-pnlp/tests/iopipe_data/a.md
-pnlp/tests/iopipe_data/first/fa.md
-pnlp/tests/iopipe_data/first/second/sa.md
+pnlp/tests/piop_data/a.md
+pnlp/tests/piop_data/first/fa.md
+pnlp/tests/piop_data/first/second/sa.md
 """
 
 # Get content(article) of all files in one directory with file name
-paths = ip.Reader.gen_files(DATA_PATH, pattern)
-articles = ip.Reader.gen_articles(paths)
+paths = piop.Reader.gen_files(DATA_PATH, pattern)
+articles = piop.Reader.gen_articles(paths)
 for article in articles:
     print(article.fname)
     print(article.f.read())
@@ -81,9 +81,9 @@ line 3 in a.
 
 # Get lines of all files in one directory with line index and file name
 # the same as ip.Reader(DATA_PATH, pattern)
-paths = ip.Reader.gen_files(DATA_PATH, pattern)
-articles = ip.Reader.gen_articles(paths)
-for line in ip.Reader.gen_flines(articles):
+paths = piop.Reader.gen_files(DATA_PATH, pattern)
+articles = piop.Reader.gen_articles(paths)
+for line in piop.Reader.gen_flines(articles):
     print(line.lid, line.fname, line.text)
 ```
 
