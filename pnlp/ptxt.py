@@ -5,7 +5,35 @@ import re
 
 class Text:
 
-    def __init__(self, text: str, pat: str or re.Pattern):
+    """
+    Text clean, extract and length.
+
+    Parameters
+    ----------
+    text: str
+        Raw text.
+    pat: re.Pattern or str
+        Support custom re.Pattern. 
+        Default is '', will use re.compile(r'.+').
+        Other str pattern is built-in, including:
+        'chi': Chinese character
+        'pun': Punctuations
+        'whi': White space
+        'nwh': Non White space
+        'wnb': Word and number
+        'nwn': Non word and number
+        'eng': English character
+        'num': Number
+        'pic': Pictures
+        'lnk': Links
+        'emj': Emojis
+
+    Returns
+    -------
+    A text object.
+    """
+
+    def __init__(self, text: str, pat: str or re.Pattern = ''):
         self.text = text
         self.reg = Regex()
         if isinstance(pat, str):
@@ -112,7 +140,7 @@ class Regex:
                 "whi", "nwh", 
                 "wnb", "nwn",
                 "eng", "num", 
-                "pic", "link", "emj"]
+                "pic", "lnk", "emj"]
 
     pun_en = r"，。；、？！：“”‘’（）「」『』〔〕【】《》〈〉…——\-—～·"
     pun_zh = r",.;?!\(\)\[\]\{\}<>_"
@@ -182,8 +210,11 @@ class Regex:
         -------
         2, +2, -2, 2.1, -2.2, 1/5, 2:3, -2/5, 2%, 2.5%
         """
-        zhnum = "１２３４５６７８９０"
-        _pnum = re.compile(rf'[+-.]?[\d{zhnum}]+[.:/]?[\d{zhnum}%]*')
+        _pnum = re.compile(r'''
+                    [+-.]?\d+[.:/]?[\d%]+
+                    |
+                    [+-.]?\d+(?!\.\w+)
+                    ''', re.UNICODE | re.VERBOSE)
         return _pnum
 
     @property
@@ -191,7 +222,12 @@ class Regex:
         """
         Picture pattern.
         """
-        _ppic = re.compile(r'!\[.*\]\(.+\)')
+        _ppic = re.compile(r'''
+                    !\[.*?\]\(.*?\.(jpeg|png|jpg|gif)\)
+                    |
+                    https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.(jpeg|png|jpg|gif)
+                    ''', 
+                    re.UNICODE | re.VERBOSE)
         return _ppic
 
     @property
@@ -199,7 +235,12 @@ class Regex:
         """
         Link pattern.
         """
-        _plink = re.compile(r'\[\w+\]\(.+\)')
+        _plink = re.compile(r'''
+                    \[\w+?\]\(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)\)
+                    |
+                    https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)
+                    ''', 
+                    re.UNICODE | re.VERBOSE)
         return _plink
 
     @property
