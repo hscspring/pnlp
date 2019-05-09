@@ -15,6 +15,8 @@ This is a pre-processing tool for NLP.
 
 ### Iopipe
 
+#### IO process
+
 ```bash
 tree tests/piop_data/
 ├── a.md
@@ -91,6 +93,25 @@ paths = piop.Reader.gen_files(DATA_PATH, pattern)
 articles = piop.Reader.gen_articles(paths)
 for line in piop.Reader.gen_flines(articles):
     print(line.lid, line.fname, line.text)
+```
+
+#### Built-in Method
+
+```python
+from pnlp import piop
+
+# Read
+file_string = piop.read_file(file_path)
+file_list = piop.read_lines(file_path)
+file_json = piop.read_json(file_path)
+file_yml = piop.read_yml(file_path)
+
+# Write
+piop.write_json(file_path, data)
+piop.write_file(file_path, data)
+
+# Others
+piop.check_dir(dirname) # will make dirname if not exist
 ```
 
 ### Text
