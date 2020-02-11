@@ -1,133 +1,5 @@
-# from __future__ import annotations
 from addict import Dict
 import re
-
-
-class Text:
-
-    """
-    Text clean, extract and length.
-
-    Parameters
-    ----------
-    text: str
-        Raw text.
-    pat: re.Pattern or str
-        Support custom re.Pattern. 
-        Default is '', will use re.compile(r'.+').
-        Other str pattern is built-in, including:
-        'chi': Chinese character
-        'pun': Punctuations
-        'whi': White space
-        'nwh': Non White space
-        'wnb': Word and number
-        'nwn': Non word and number
-        'eng': English character
-        'num': Number
-        'pic': Pictures
-        'lnk': Links
-        'emj': Emojis
-
-    Returns
-    -------
-    A text object.
-    """
-
-    def __init__(self, text: str, pat: str or re.Pattern = ''):
-        self.text = text
-        self.reg = Regex()
-        if isinstance(pat, str):
-            self.pat = self.reg.patdict.get(pat, re.compile(r'.+'))
-        else:
-            self.pat = pat
-
-    def __repr__(self) -> str:
-        attrs = self.text if len(self.text) <= 10 else self.text[:10] + "..."
-        return "Text(text=%r)" % (attrs)
-
-    @property
-    def clean(self):
-        """
-        Clean text with givening pattern.
-
-        Returns
-        -------
-        Cleaned text.
-        """
-        text = self.pat.sub("", self.text)
-        return text
-
-    @property
-    def extract(self):
-        """
-        Extract pattern-matching items.
-
-        Returns
-        -------
-        Extracted items and their locations.
-        """
-        mats = []
-        locs = []
-        for mat in self.pat.finditer(self.text):
-            mats.append(mat.group())
-            locs.append(mat.span())
-        ext = Dict()
-        ext.mats = mats
-        ext.locs = locs
-        return ext
-
-    def _len(self, pat):
-        lst = pat.findall(self.text)
-        return len("".join(lst))
-
-    @property
-    def len_all(self):
-        """
-        Length of all characters.
-        """
-        return len(self.text)
-
-    @property
-    def len_nwh(self):
-        """
-        Length of non-white characters.
-        """
-        return self._len(self.reg.pnwh)
-
-    @property
-    def len_chi(self):
-        """
-        Length of pure Chinese characters.
-        """
-        return self._len(self.reg.pchi)
-
-    @property
-    def len_wnb(self):
-        """
-        Length of characters and numbers.
-        """
-        return self._len(self.reg.pwnb)
-
-    @property
-    def len_pun(self):
-        """
-        Length of all punctuations.
-        """
-        return self._len(self.reg.ppun)
-
-    @property
-    def len_eng(self):
-        """
-        Length of English characters.
-        """
-        return self._len(self.reg.peng)
-
-    @property
-    def len_num(self):
-        """
-        Length of all numbers.
-        """
-        return self._len(self.reg.pnum)
 
 
 class Regex:
@@ -136,14 +8,14 @@ class Regex:
     All kinds of Regular patterns.
     """
 
-    patnames = ["chi", "pun", 
-                "whi", "nwh", 
+    patnames = ["chi", "pun",
+                "whi", "nwh",
                 "wnb", "nwn",
-                "eng", "num", 
+                "eng", "num",
                 "pic", "lnk", "emj"]
 
-    pun_en = r"，。；、？！：“”‘’（）「」『』〔〕【】《》〈〉…——\-—～·"
-    pun_zh = r",.;?!\(\)\[\]\{\}<>_"
+    pun_zh = r"，。；、？！：“”‘’（）「」『』〔〕【】《》〈〉…——\-—～~·"
+    pun_en = r",.;?!\(\)\[\]\{\}<>_"
 
     @property
     def pchi(self):
@@ -226,8 +98,8 @@ class Regex:
                     !\[.*?\]\(.*?\.(jpeg|png|jpg|gif)\)
                     |
                     https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.(jpeg|png|jpg|gif)
-                    ''', 
-                    re.UNICODE | re.VERBOSE)
+                    ''',
+                           re.UNICODE | re.VERBOSE)
         return _ppic
 
     @property
@@ -239,8 +111,8 @@ class Regex:
                     \[\w+?\]\(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)\)
                     |
                     https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)
-                    ''', 
-                    re.UNICODE | re.VERBOSE)
+                    ''',
+                            re.UNICODE | re.VERBOSE)
         return _plink
 
     @property
@@ -260,7 +132,7 @@ class Regex:
         All patterns.
         """
         patterns = [self.pchi, self.ppun,
-                    self.pwhi, self.pnwh, 
+                    self.pwhi, self.pnwh,
                     self.pwnb, self.pnwn,
                     self.peng, self.pnum,
                     self.ppic, self.plnk, self.pemj]
@@ -268,3 +140,146 @@ class Regex:
         return _patdict
 
 
+class Text(Regex):
+
+    """
+    Text clean, extract and length.
+
+    Parameters
+    ----------
+    text: str
+        Raw text.
+    pat: list of patterns
+        Support custom re.Pattern. 
+        Default is re.compile(r'.+').
+        Other str pattern is built-in, including:
+        'chi': Chinese character
+        'pun': Punctuations
+        'whi': White space
+        'nwh': Non White space
+        'wnb': Word and number
+        'nwn': Non word and number
+        'eng': English character
+        'num': Number
+        'pic': Pictures
+        'lnk': Links
+        'emj': Emojis
+
+    Returns
+    -------
+    A text object.
+
+    Notes
+    ------
+    The pattern order is important. The front pattern will be excute earlier.
+    """
+
+    def __init__(self, text: str, pattern_list: list = None):
+        self.text = text
+        self.pats = []
+        if not pattern_list:
+            self.pats.append(re.compile(r'.+'))
+        else:
+            for pat in pattern_list:
+                if isinstance(pat, str):
+                    built_in_pat = self.patdict.get(pat)
+                    if built_in_pat:
+                        self.pats.append(built_in_pat)
+                    else:
+                        raise ValueError(
+                            "pnlp: {} is not a valid built-in pattern string.".format(pat))
+                elif isinstance(pat, re.Pattern):
+                    self.pats.append(pat)
+                else:
+                    raise ValueError(
+                        "pnlp: {} is not a valid RE pattern.".format(pat))
+
+    def __repr__(self) -> str:
+        return "Text(pattern=%r)" % str(self.pat)
+
+    @property
+    def clean(self):
+        """
+        Clean text with givening pattern.
+
+        Returns
+        -------
+        Cleaned text.
+        """
+        text = self.text
+        for pat in self.pats:
+            text = pat.sub("", text)
+        return text
+
+    @property
+    def extract(self):
+        """
+        Extract pattern-matching items.
+
+        Returns
+        -------
+        Extracted items and their locations.
+        """
+        mats, locs = [], []
+        text = self.text
+        for pat in self.pats:
+            for mat in pat.finditer(text):
+                mats.append(mat.group())
+                locs.append(mat.span())
+        ext = Dict()
+        ext.mats = mats
+        ext.locs = locs
+        return ext
+
+    def _len(self, pat):
+        lst = pat.findall(self.text)
+        return len("".join(lst))
+
+    @property
+    def len_all(self):
+        """
+        Length of all characters.
+        """
+        return len(self.text)
+
+    @property
+    def len_nwh(self):
+        """
+        Length of non-white characters.
+        """
+        return self._len(self.pnwh)
+
+    @property
+    def len_chi(self):
+        """
+        Length of pure Chinese characters.
+        """
+        return self._len(self.pchi)
+
+    @property
+    def len_wnb(self):
+        """
+        Length of characters and numbers.
+        """
+        return self._len(self.pwnb)
+
+    @property
+    def len_pun(self):
+        """
+        Length of all punctuations.
+        """
+        return self._len(self.ppun)
+
+    @property
+    def len_eng(self):
+        """
+        Length of English characters.
+        """
+        return self._len(self.peng)
+
+    @property
+    def len_num(self):
+        """
+        Length of all numbers.
+        """
+        return self._len(self.pnum)

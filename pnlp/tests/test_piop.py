@@ -16,7 +16,8 @@ DATA_PATH = os.path.join(ROOT_PATH, 'tests', 'piop_data')
 @pytest.fixture(params=['*.md', '*.txt', '*.data', 'f*.*', '*c.*'])
 def get_Reader_path_match_res(request):
     res = []
-    for line in Reader(DATA_PATH, request.param):
+    reader = Reader(request.param)
+    for line in reader(DATA_PATH):
         res.append(line)
     return res
 
@@ -29,7 +30,8 @@ def test_Reader_path_match(get_Reader_path_match_res):
 
 def test_Reader_file():
     res = []
-    for line in Reader(os.path.join(DATA_PATH, 'a.md')):
+    reader = Reader()
+    for line in reader(os.path.join(DATA_PATH, 'a.md')):
         res.append(line)
     assert len(res) == 3
     assert res[0].text == 'line 1 in a.'

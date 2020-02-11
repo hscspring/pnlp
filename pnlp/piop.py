@@ -1,23 +1,19 @@
 # from __future__ import annotations
 
 from addict import Dict
-# from dataclasses import dataclass
 import json
 import os
 import pathlib
-import smart_open
 import yaml
 
 
-# @dataclass
 class Reader:
 
-    def __init__(self, dirname: str, pattern: str = "*.*"):
-        self.dirname = dirname
+    def __init__(self, pattern: str = "*.*"):
         self.pattern = pattern
 
     def __repr__(self) -> str:
-        return "Reader(dirname=%r, pattern=%r)" % (self.dirname, self.pattern)
+        return "Reader(pattern=%r)" % (self.pattern)
 
     @staticmethod
     def gen_files(dirname: str, pattern: str = '*.*'):
@@ -34,7 +30,7 @@ class Reader:
     @staticmethod
     def gen_articles(fpaths: list):
         for fpath in fpaths:
-            with smart_open.open(fpath, encoding='utf8') as f:
+            with open(fpath, encoding='utf8') as f:
                 article = Dict()
                 article.fname = fpath.name
                 article.f = f
@@ -63,15 +59,15 @@ class Reader:
         """
         Process each file to lines when fpath is given.
         """
-        with smart_open.open(fpath, encoding='utf8') as f:
+        with open(fpath, encoding='utf8') as f:
             for line in f:
                 line = line.strip()
                 if len(line) == 0:
                     continue
                 yield line
 
-    def __iter__(self):
-        fpaths = self.gen_files(self.dirname, self.pattern)
+    def __call__(self, dirname: str):
+        fpaths = self.gen_files(dirname, self.pattern)
         articles = self.gen_articles(fpaths)
         flines = self.gen_flines(articles)
         for line in flines:
@@ -80,34 +76,34 @@ class Reader:
 
 def read_file(fpath: str, **kwargs) -> str:
     """
-    Read file with `smart_open` from file path.
+    Read file from file path.
 
     Parameters
     -----------
     fpath: str
         File path.
     kwargs: optional
-        Other `smart_open` support params. 
+        Other `open` support params. 
 
     Returns
     --------
         data string of the file.
     """
-    with smart_open.open(fpath, **kwargs) as f:
+    with open(fpath, **kwargs) as f:
         data = f.read()
     return data
 
 
 def read_lines(fpath: str, **kwargs) -> list:
     """
-    Read file with `smart_open` from file path.
+    Read file with `open` from file path.
 
     Parameters
     ----------
     fpath: str
         File path.
     kwargs: optional
-        Other `smart_open` support params. 
+        Other `open` support params. 
 
     Returns
     -------
@@ -118,7 +114,7 @@ def read_lines(fpath: str, **kwargs) -> list:
     Blank line is ignored.
     """
     res = []
-    with smart_open.open(fpath, **kwargs) as f:
+    with open(fpath, **kwargs) as f:
         for line in f:
             line = line.strip()
             if len(line) == 0:
@@ -146,9 +142,9 @@ def write_json(fpath: str, data, **kwargs):
 
 
 def write_file(fpath: str, data, **kwargs):
-    with smart_open.open(fpath, 'w', **kwargs) as fout:
+    with open(fpath, 'w', **kwargs) as fout:
         for line in data:
-            fout.write(line+"\n")
+            fout.write(line + "\n")
 
 
 def check_dir(dirname: str):
@@ -156,5 +152,3 @@ def check_dir(dirname: str):
         pass
     else:
         os.makedirs(dirname)
-
-

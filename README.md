@@ -38,13 +38,14 @@ tree tests/piop_data/
 
 ```python
 import os
-from pnlp import piop
+from pnlp import Reader
 
 DATA_PATH = "./pnlp/tests/piop_data/"
 pattern = '*.md' # also could be '*.txt', 'f*.*', etc.
+reader = Reader(pattern)
 
 # Get lines of all files in one directory with line index and file name
-for line in piop.Reader(DATA_PATH, pattern):
+for line in reader(DATA_PATH, pattern):
     print(line.lid, line.fname, line.text)
 """
 0 a.md line 1 in a.
@@ -56,7 +57,7 @@ for line in piop.Reader(DATA_PATH, pattern):
 """
 
 # Get lines of one file lines with line index and file name
-for line in piop.Reader(os.path.join(DATA_PATH, "a.md")):
+for line in reader(os.path.join(DATA_PATH, "a.md")):
     print(line.lid, line.fname, line.text)
 """
 0 a.md line 1 in a.
@@ -65,7 +66,7 @@ for line in piop.Reader(os.path.join(DATA_PATH, "a.md")):
 """
 
 # Get all filepaths in one directory
-for path in piop.Reader.gen_files(DATA_PATH, pattern):
+for path in reader.gen_files(DATA_PATH, pattern):
     print(path)
 """
 pnlp/tests/piop_data/a.md
@@ -74,8 +75,8 @@ pnlp/tests/piop_data/first/second/sa.md
 """
 
 # Get content(article) of all files in one directory with file name
-paths = piop.Reader.gen_files(DATA_PATH, pattern)
-articles = piop.Reader.gen_articles(paths)
+paths = reader.gen_files(DATA_PATH, pattern)
+articles = reader.gen_articles(paths)
 for article in articles:
     print(article.fname)
     print(article.f.read())
@@ -89,29 +90,29 @@ line 3 in a.
 
 # Get lines of all files in one directory with line index and file name
 # the same as ip.Reader(DATA_PATH, pattern)
-paths = piop.Reader.gen_files(DATA_PATH, pattern)
-articles = piop.Reader.gen_articles(paths)
-for line in piop.Reader.gen_flines(articles):
+paths = reader.gen_files(DATA_PATH, pattern)
+articles = reader.gen_articles(paths)
+for line in reader.gen_flines(articles):
     print(line.lid, line.fname, line.text)
 ```
 
 #### Built-in Method
 
 ```python
-from pnlp import piop
+import pnlp
 
 # Read
-file_string = piop.read_file(file_path)
-file_list = piop.read_lines(file_path)
-file_json = piop.read_json(file_path)
-file_yml = piop.read_yml(file_path)
+file_string = pnlp.read_file(file_path)
+file_list = pnlp.read_lines(file_path)
+file_json = pnlp.read_json(file_path)
+file_yml = pnlp.read_yml(file_path)
 
 # Write
-piop.write_json(file_path, data)
-piop.write_file(file_path, data)
+pnlp.write_json(file_path, data)
+pnlp.write_file(file_path, data)
 
 # Others
-piop.check_dir(dirname) # will make dirname if not exist
+pnlp.check_dir(dirname) # will make dirname if not exist
 ```
 
 ### Text
@@ -120,7 +121,7 @@ piop.check_dir(dirname) # will make dirname if not exist
 
 ```python
 import re
-from pnlp import ptxt
+from pnlp import Text
 
 text = "这是https://www.yam.gift长度测试，《 》*)FSJfdsjf😁![](http://xx.jpg)。233."
 pattern = re.compile(r'\w+')
@@ -140,7 +141,7 @@ pattern = re.compile(r'\w+')
 #	'lnk': Links
 #	'emj': Emojis
 
-pt = ptxt.Text(text, pattern)
+pt = Text(text, ['chi'])
 # pt.extract will return matches and their locations
 print(pt.extract)
 """
@@ -155,16 +156,29 @@ print(pt.clean)
 """
 https://www.yam.gift，《 》*)FSJfdsjf😁![](http://xx.jpg)。233.
 """
+
+pt = Text(text, ['pic', 'lnk'])
+print(pt.extract.mats, pt.extract.locs)
+"""
+['https://www.yam.gif',
+ '![](http://xx.jpg)',
+ 'https://www.yam.gift',
+ 'http://xx.jpg']
+"""
+print(pt.clean)
+"""
+这是t长度测试，《 》*)FSJfdsjf😁。233.
+"""
 ```
 
 #### Length
 
 ```python
-from pnlp import ptxt
+from pnlp import Text
 
 text = "这是https://www.yam.gift长度测试，《 》*)FSJfdsjf😁![](http://xx.jpg)。233."
 
-pt = ptxt.Text(text)
+pt = Text(text)
 # Note that even a pattern is used, the length is always for the raw text.
 # Length is counted by character, not entire word or number.
 print("Length of all characters: ", pt.len_all)
@@ -188,10 +202,10 @@ Length of all numbers:  3
 ### Magic
 
 ```python
-from pnlp import pmag
+from pnlp import MagicDict
 
 # Nest dict
-dict1 = pmag.MagicDict()
+dict1 = MagicDict()
 dict1['a']['b']['c'] = 2
 print(dict1)
 """
@@ -218,3 +232,8 @@ cd ./pnlp/tests
 pytest
 ```
 
+## ChangeLog
+
+### v0.2
+
+Optimize several interface and make `Text` accept list of Regular Expression Patterns.

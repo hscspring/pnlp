@@ -21,7 +21,7 @@ def test_regex_well(get_regex):
 
 @pytest.fixture(params=reg.patnames)
 def get_patten(request):
-    return request.param
+    return [request.param]
 
 def test_Text_extract(get_patten):
     text = "这是，测试fdsf234*(&( 返回类型的文本。"
@@ -36,17 +36,32 @@ def test_Text_clean(get_patten):
     assert isinstance(res, str) == True
 
 
+def test_pattern_string_invalid():
+    try:
+        pt = Text("", ["XX"])
+    except Exception as e:
+        assert "built-in" in str(e)
+
+
+def test_pattern_invalid():
+    try:
+        pt = Text("", [lambda x: x])
+    except Exception as e:
+        assert "RE" in str(e)
+
+
 @pytest.fixture
 def text_chi():
     text = "你好。jefj*(&-1)这是中文测试！"
     return text
 
+
 def test_Text_extract_chi(text_chi):
-    res = Text(text_chi, 'chi').extract
+    res = Text(text_chi, ['chi']).extract
     assert "".join(res.mats) == "你好这是中文测试"
 
 def test_Text_clean_chi(text_chi):
-    res = Text(text_chi, 'chi').clean
+    res = Text(text_chi, ['chi']).clean
     assert res == "。jefj*(&-1)！"
 
 
@@ -56,11 +71,11 @@ def text_pun():
     return text
 
 def test_Text_extract_pun(text_pun):
-    res = Text(text_pun, 'nwn').extract
+    res = Text(text_pun, ['nwn']).extract
     assert "".join(res.mats) == "，,.!;<>()。"
 
 def test_Text_clean_pun(text_pun):
-    res = Text(text_pun, 'nwn').clean
+    res = Text(text_pun, ['nwn']).clean
     assert res == "你好这是标点符号测试"
 
 
@@ -70,11 +85,11 @@ def text_whi():
     return text
 
 def test_Text_extract_whi(text_whi):
-    res = Text(text_whi, 'whi').extract
+    res = Text(text_whi, ['whi']).extract
     assert "".join(res.mats) == " \t\n"
 
 def test_Text_clean_whi(text_whi):
-    res = Text(text_whi, 'whi').clean
+    res = Text(text_whi, ['whi']).clean
     assert res == "你好，这是空白符号测试。"
 
 
@@ -84,11 +99,11 @@ def text_nwh():
     return text
 
 def test_Text_extract_nwh(text_nwh):
-    res = Text(text_nwh, 'nwh').extract
+    res = Text(text_nwh, ['nwh']).extract
     assert "".join(res.mats) == "你好，这是非空白符号测试。"
 
 def test_Text_clean_nwh(text_nwh):
-    res = Text(text_nwh, 'nwh').clean
+    res = Text(text_nwh, ['nwh']).clean
     assert res == " \t\n"
 
 
@@ -98,11 +113,11 @@ def text_wnb():
     return text
 
 def test_Text_extract_wnb(text_wnb):
-    res = Text(text_wnb, 'wnb').extract
+    res = Text(text_wnb, ['wnb']).extract
     assert "".join(res.mats) == "你好这是词与word数字number测试"
 
 def test_Text_clean_wnb(text_wnb):
-    res = Text(text_wnb, 'wnb').clean
+    res = Text(text_wnb, ['wnb']).clean
     assert res == "，。"
 
 
@@ -112,11 +127,11 @@ def text_nwn():
     return text
 
 def test_Text_extract_nwn(text_nwn):
-    res = Text(text_nwn, 'nwn').extract
+    res = Text(text_nwn, ['nwn']).extract
     assert "".join(res.mats) == "，。"
 
 def test_Text_clean_nwn(text_nwn):
-    res = Text(text_nwn, 'nwn').clean
+    res = Text(text_nwn, ['nwn']).clean
     assert res == "你好这是非词或word数字number测试"
 
 
@@ -126,11 +141,11 @@ def text_eng():
     return text
 
 def test_Text_extract_eng(text_eng):
-    res = Text(text_eng, 'eng').extract
+    res = Text(text_eng, ['eng']).extract
     assert "".join(res.mats) == "English"
 
 def test_Text_clean_eng(text_eng):
-    res = Text(text_eng, 'eng').clean
+    res = Text(text_eng, ['eng']).clean
     assert res == "你好，这#￥是英文测试。"
 
 
@@ -140,11 +155,11 @@ def text_num():
     return text
 
 def test_Text_extract_num(text_num):
-    res = Text(text_num, 'num').extract
+    res = Text(text_num, ['num']).extract
     assert "".join(res.mats) == "2+2-22.1-2.21/52:3-2/52%2.5%"
 
 def test_Text_clean_num(text_num):
-    res = Text(text_num, 'num').clean
+    res = Text(text_num, ['num']).clean
     assert res == "你好，这#￥是数字, , , , , , , , , 测试。"
 
 
@@ -154,11 +169,11 @@ def text_pic():
     return text
 
 def test_Text_extract_pic(text_pic):
-    res = Text(text_pic, 'pic').extract
+    res = Text(text_pic, ['pic']).extract
     assert "".join(res.mats) == "![p1](https://xxx.jpeg)![](yyy.png)https://z.jpg"
 
 def test_Text_clean_pic(text_pic):
-    res = Text(text_pic, 'pic').clean
+    res = Text(text_pic, ['pic']).clean
     assert res == "你好，这#￥是图片测试。"
 
 
@@ -168,11 +183,11 @@ def text_lnk():
     return text
 
 def test_Text_extract_lnk(text_lnk):
-    res = Text(text_lnk, 'lnk').extract
+    res = Text(text_lnk, ['lnk']).extract
     assert "".join(res.mats) == "[link](https://yam.gift)http://yam.gift"
 
 def test_Text_clean_lnk(text_lnk):
-    res = Text(text_lnk, 'lnk').clean
+    res = Text(text_lnk, ['lnk']).clean
     assert res == "你好，这#￥是链接测试。"
 
 
@@ -182,11 +197,11 @@ def text_emj():
     return text
 
 def test_Text_extract_emj(text_emj):
-    res = Text(text_emj, 'emj').extract
+    res = Text(text_emj, ['emj']).extract
     assert "".join(res.mats) == "😁😜🌹"
 
 def test_Text_clean_emj(text_emj):
-    res = Text(text_emj, 'emj').clean
+    res = Text(text_emj, ['emj']).clean
     assert res == "你好，这#￥是表情测试。"
 
 

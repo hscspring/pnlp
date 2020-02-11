@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pnlp",
-    version="0.11",
+    version="0.2",
     author="Yam",
     author_email="haoshaochun@gmail.com",
     description="A pre-processing tool for NLP.",
@@ -16,7 +16,6 @@ setuptools.setup(
     install_requires=[
           'addict',
           'pyyaml',
-          'smart-open'
       ],
     classifiers=[
         "Programming Language :: Python :: 3",
