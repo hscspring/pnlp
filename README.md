@@ -45,7 +45,7 @@ pattern = '*.md' # also could be '*.txt', 'f*.*', etc.
 reader = Reader(pattern)
 
 # Get lines of all files in one directory with line index and file name
-for line in reader(DATA_PATH, pattern):
+for line in reader(DATA_FOLDER_PATH):
     print(line.lid, line.fname, line.text)
 """
 0 a.md line 1 in a.
@@ -57,7 +57,8 @@ for line in reader(DATA_PATH, pattern):
 """
 
 # Get lines of one file lines with line index and file name
-for line in reader(os.path.join(DATA_PATH, "a.md")):
+# if a file is read, the `pattern` is not effective
+for line in reader(os.path.join(DATA_FOLDER_PATH, "a.md")):
     print(line.lid, line.fname, line.text)
 """
 0 a.md line 1 in a.
