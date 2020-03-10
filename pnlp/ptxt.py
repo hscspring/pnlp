@@ -1,6 +1,24 @@
 from addict import Dict
 import re
 
+psent = re.compile(r'''
+    [。.！!?？…]+[”][。.!?！？…]?
+    |
+    (?<=[a-zA-Z"”》）)〉〕】>」』\u4e00-\u9fa5])[.。！!?？…；～~]+
+    ''', re.UNICODE | re.VERBOSE)
+
+
+def cut_sentence(text: str) -> list:
+    ends = psent.findall(text)
+    length = len(ends)
+    lst = []
+    for i, sent in enumerate(psent.split(text)):
+        if i < length:
+            sent = sent + ends[i]
+        if sent:
+            lst.append(sent)
+    return lst
+
 
 class Regex:
 

@@ -122,6 +122,8 @@ pnlp.check_dir(dirname) # will make dirname if not exist
 
 ```python
 import re
+
+# Use Text
 from pnlp import Text
 
 text = "这是https://www.yam.gift长度测试，《 》*)FSJfdsjf😁![](http://xx.jpg)。233."
@@ -170,6 +172,17 @@ print(pt.clean)
 """
 这是t长度测试，《 》*)FSJfdsjf😁。233.
 """
+
+
+# USE Regex
+from pnlp import Regex
+reg = Regex()
+def clean_text(text: str) -> str:
+    text = reg.pwhi.sub("", text)
+    text = reg.pemj.sub("", text)
+    text = reg.ppic.sub("", text)
+    text = reg.plnk.sub("", text)
+    return text
 ```
 
 #### Length
@@ -235,6 +248,11 @@ pytest
 
 ## ChangeLog
 
-### v0.2
+### v0.21
+
+Add `cut_sentence` method.
+
+### v0.20
 
 Optimize several interface and make `Text` accept list of Regular Expression Patterns.
+
