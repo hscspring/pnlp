@@ -183,6 +183,15 @@ def clean_text(text: str) -> str:
     text = reg.ppic.sub("", text)
     text = reg.plnk.sub("", text)
     return text
+
+
+# Cut Sentence
+from pnlp import cut_sentence
+text = "你好！欢迎使用。"
+sentence_list = cut_sentence(text)
+"""
+['你好！', '欢迎使用。']
+"""
 ```
 
 #### Length
