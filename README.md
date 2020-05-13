@@ -144,36 +144,41 @@ pattern = re.compile(r'\w+')
 #	'lnk': Links
 #	'emj': Emojis
 
-pt = Text(text, ['chi'])
+pt = Text(['chi'])
 # pt.extract will return matches and their locations
-print(pt.extract)
+res = pt.extract(text)
+print(res)
 """
-{'mats': ['这是', '长度测试'], 'locs': [(0, 2), (22, 26)]}
+{'text': '这是长度测试' ,'mats': ['这是', '长度测试'], 'locs': [(0, 2), (22, 26)]}
 """
-print(pt.extract.mats, pt.extract.locs)
+print(res.text, res.extract.mats, res.extract.locs)
 """
-['这是', '长度测试'] [(0, 2), (22, 26)]
+'这是长度测试' ['这是', '长度测试'] [(0, 2), (22, 26)]
 """
 # pt.clean will return cleaned text using the pattern
-print(pt.clean)
+print(pt.clean(text))
 """
 https://www.yam.gift，《 》*)FSJfdsjf😁![](http://xx.jpg)。233.
 """
 
-pt = Text(text, ['pic', 'lnk'])
-print(pt.extract.mats, pt.extract.locs)
+pt = Text(['pic', 'lnk'])
+res = pt.extract(text)
+print(res.extract.mats)
 """
 ['https://www.yam.gif',
  '![](http://xx.jpg)',
  'https://www.yam.gift',
  'http://xx.jpg']
 """
-print(pt.clean)
+print(pt.clean(text))
 """
 这是t长度测试，《 》*)FSJfdsjf😁。233.
 """
+```
 
+#### Regex
 
+```python
 # USE Regex
 from pnlp import Regex
 reg = Regex()
@@ -183,8 +188,11 @@ def clean_text(text: str) -> str:
     text = reg.ppic.sub("", text)
     text = reg.plnk.sub("", text)
     return text
+```
 
+#### SentenceCut
 
+```python
 # Cut Sentence
 from pnlp import cut_sentence
 text = "你好！欢迎使用。"
@@ -194,23 +202,23 @@ sentence_list = cut_sentence(text)
 """
 ```
 
-#### Length
+### Length
 
 ```python
-from pnlp import Text
+from pnlp import Length
 
 text = "这是https://www.yam.gift长度测试，《 》*)FSJfdsjf😁![](http://xx.jpg)。233."
 
-pt = Text(text)
+pl = Lengh(text)
 # Note that even a pattern is used, the length is always for the raw text.
 # Length is counted by character, not entire word or number.
-print("Length of all characters: ", pt.len_all)
-print("Length of all non-white characters: ", pt.len_nwh)
-print("Length of all Chinese characters: ", pt.len_chi)
-print("Length of all words and numbers: ", pt.len_wnb)
-print("Length of all punctuations: ", pt.len_pun)
-print("Length of all English characters: ", pt.len_eng)
-print("Length of all numbers: ", pt.len_num)
+print("Length of all characters: ", pl.len_all)
+print("Length of all non-white characters: ", pl.len_nwh)
+print("Length of all Chinese characters: ", pl.len_chi)
+print("Length of all words and numbers: ", pl.len_wnb)
+print("Length of all punctuations: ", pl.len_pun)
+print("Length of all English characters: ", pl.len_eng)
+print("Length of all numbers: ", pl.len_num)
 """
 Length of all characters:  64
 Length of all non-white characters:  63
@@ -256,6 +264,10 @@ pytest
 ```
 
 ## ChangeLog
+
+### v0.22
+
+Make `Text` more convenient to use.
 
 ### v0.21
 

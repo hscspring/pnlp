@@ -165,8 +165,6 @@ class Text(Regex):
 
     Parameters
     ----------
-    text: str
-        Raw text.
     pat: list of patterns
         Support custom re.Pattern. 
         Default is re.compile(r'.+').
@@ -192,8 +190,7 @@ class Text(Regex):
     The pattern order is important. The front pattern will be excute earlier.
     """
 
-    def __init__(self, text: str, pattern_list: list = None):
-        self.text = text
+    def __init__(self, pattern_list: list = None):
         self.pats = []
         if not pattern_list:
             self.pats.append(re.compile(r'.+'))
@@ -205,7 +202,8 @@ class Text(Regex):
                         self.pats.append(built_in_pat)
                     else:
                         raise ValueError(
-                            "pnlp: {} is not a valid built-in pattern string.".format(pat))
+                            "pnlp: {} \
+                            is not a valid built-in pattern.".format(pat))
                 elif isinstance(pat, re.Pattern):
                     self.pats.append(pat)
                 else:
@@ -215,8 +213,7 @@ class Text(Regex):
     def __repr__(self) -> str:
         return "Text(pattern=%r)" % str(self.pat)
 
-    @property
-    def clean(self):
+    def clean(self, text: str):
         """
         Clean text with givening pattern.
 
@@ -224,13 +221,11 @@ class Text(Regex):
         -------
         Cleaned text.
         """
-        text = self.text
         for pat in self.pats:
             text = pat.sub("", text)
         return text
 
-    @property
-    def extract(self):
+    def extract(self, text: str):
         """
         Extract pattern-matching items.
 
@@ -239,15 +234,21 @@ class Text(Regex):
         Extracted items and their locations.
         """
         mats, locs = [], []
-        text = self.text
         for pat in self.pats:
             for mat in pat.finditer(text):
                 mats.append(mat.group())
                 locs.append(mat.span())
         ext = Dict()
+        ext.text = "".join(mats)
         ext.mats = mats
         ext.locs = locs
         return ext
+
+
+class Length(Regex):
+
+    def __init__(self, text: str):
+        self.text = text
 
     def _len(self, pat):
         lst = pat.findall(self.text)

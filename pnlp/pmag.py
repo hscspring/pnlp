@@ -7,6 +7,7 @@ class MagicDict(dict):
         try:
             return dict.__getitem__(self, item)
         except KeyError:
+            # create a self instance
             value = self[item] = type(self)()
             return value
 
