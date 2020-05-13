@@ -127,7 +127,7 @@ import re
 from pnlp import Text
 
 text = "这是https://www.yam.gift长度测试，《 》*)FSJfdsjf😁![](http://xx.jpg)。233."
-pattern = re.compile(r'\w+')
+pattern = re.compile(r'\d+')
 
 # pattern is re.Pattern or str type
 # Default is '', means do not use any pattern (acctually is re.compile(r'.+')
@@ -144,14 +144,16 @@ pattern = re.compile(r'\w+')
 #	'lnk': Links
 #	'emj': Emojis
 
-pt = Text(['chi'])
+pt = Text(['chi', pattern])
 # pt.extract will return matches and their locations
 res = pt.extract(text)
+
 print(res)
 """
-{'text': '这是长度测试' ,'mats': ['这是', '长度测试'], 'locs': [(0, 2), (22, 26)]}
+{'text': '这是长度测试233', 'mats': ['这是', '长度测试', '233'], 'locs': [(0, 2), (22, 26), (60, 63)]}
 """
-print(res.text, res.extract.mats, res.extract.locs)
+
+print(res.text, res.mats, res.locs)
 """
 '这是长度测试' ['这是', '长度测试'] [(0, 2), (22, 26)]
 """
@@ -163,13 +165,15 @@ https://www.yam.gift，《 》*)FSJfdsjf😁![](http://xx.jpg)。233.
 
 pt = Text(['pic', 'lnk'])
 res = pt.extract(text)
-print(res.extract.mats)
+
+print(res.mats)
 """
 ['https://www.yam.gif',
  '![](http://xx.jpg)',
  'https://www.yam.gift',
  'http://xx.jpg']
 """
+
 print(pt.clean(text))
 """
 这是t长度测试，《 》*)FSJfdsjf😁。233.
@@ -194,9 +198,10 @@ def clean_text(text: str) -> str:
 
 ```python
 # Cut Sentence
-from pnlp import cut_sentence
+from pnlp import cut_sentence as pcs
 text = "你好！欢迎使用。"
-sentence_list = cut_sentence(text)
+sent_list = pcs(text)
+print(sent_list)
 """
 ['你好！', '欢迎使用。']
 """
@@ -209,7 +214,7 @@ from pnlp import Length
 
 text = "这是https://www.yam.gift长度测试，《 》*)FSJfdsjf😁![](http://xx.jpg)。233."
 
-pl = Lengh(text)
+pl = Length(text)
 # Note that even a pattern is used, the length is always for the raw text.
 # Length is counted by character, not entire word or number.
 print("Length of all characters: ", pl.len_all)
@@ -219,6 +224,7 @@ print("Length of all words and numbers: ", pl.len_wnb)
 print("Length of all punctuations: ", pl.len_pun)
 print("Length of all English characters: ", pl.len_eng)
 print("Length of all numbers: ", pl.len_num)
+
 """
 Length of all characters:  64
 Length of all non-white characters:  63
@@ -236,9 +242,10 @@ Length of all numbers:  3
 from pnlp import MagicDict
 
 # Nest dict
-dict1 = MagicDict()
-dict1['a']['b']['c'] = 2
-print(dict1)
+pmd = MagicDict()
+pmd['a']['b']['c'] = 2
+print(pmd)
+
 """
 {'a': {'b': {'c': 2}}}
 """
@@ -249,6 +256,7 @@ dx = {1: 'a',
       3: 'a',
       4: 'b' }
 print(pmag.MagicDict.reverse(dx))
+
 """
 {'a': [1, 2, 3], 'b': 4}
 """
@@ -259,8 +267,7 @@ print(pmag.MagicDict.reverse(dx))
 Clone the repo and enter the tests directory: 
 
 ```bash
-cd ./pnlp/tests
-pytest
+$ pytest
 ```
 
 ## ChangeLog
