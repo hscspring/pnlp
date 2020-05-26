@@ -7,7 +7,7 @@ from .pmag import MagicDict
 
 
 __title__ = 'pnlp'
-__version__ = '0.22'
+__version__ = '0.24'
 __author__ = 'Yam'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2019, 2020 Yam'

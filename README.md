@@ -130,7 +130,7 @@ text = "这是https://www.yam.gift长度测试，《 》*)FSJfdsjf😁![](http:/
 pattern = re.compile(r'\d+')
 
 # pattern is re.Pattern or str type
-# Default is '', means do not use any pattern (acctually is re.compile(r'.+')
+# Default is '', means do not use any pattern (acctually is re.compile(r'.+'). In this pattern, clean returns nothing, extract returns the origin.
 # If pattern is a string, a build-in pattern will be used, there are 11 types:
 #	'chi': Chinese character
 #	'pun': Punctuations
@@ -271,6 +271,14 @@ $ pytest
 ```
 
 ## ChangeLog
+
+### v0.24
+
+Add `stop_words`. Fix `read_json`.
+
+### v0.23
+
+Fix `Text` default rule.
 
 ### v0.22
 

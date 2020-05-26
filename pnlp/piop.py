@@ -124,8 +124,8 @@ def read_lines(fpath: str, **kwargs) -> list:
 
 
 def read_json(fpath: str, **kwargs):
-    fin = open(fpath, 'r')
-    data = json.load(fin, **kwargs)
+    with open(fpath, 'r') as fin:
+        data = json.load(fin, **kwargs)
     return data
 
 

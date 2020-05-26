@@ -40,7 +40,7 @@ class Regex:
         """
         Chinese char pattern.
         """
-        _pchi = re.compile(r'[\u4e00-\u9fa5]+')
+        _pchi = re.compile(r'[\u4E00-\u9FD5]+') # from jieba
         return _pchi
 
     @property
@@ -190,25 +190,22 @@ class Text(Regex):
     The pattern order is important. The front pattern will be excute earlier.
     """
 
-    def __init__(self, pattern_list: list = None):
+    def __init__(self, pattern_list: list = []):
         self.pats = []
-        if not pattern_list:
-            self.pats.append(re.compile(r'.+'))
-        else:
-            for pat in pattern_list:
-                if isinstance(pat, str):
-                    built_in_pat = self.patdict.get(pat)
-                    if built_in_pat:
-                        self.pats.append(built_in_pat)
-                    else:
-                        raise ValueError(
-                            "pnlp: {} \
-                            is not a valid built-in pattern.".format(pat))
-                elif isinstance(pat, re.Pattern):
-                    self.pats.append(pat)
+        for pat in pattern_list:
+            if isinstance(pat, str):
+                built_in_pat = self.patdict.get(pat)
+                if built_in_pat:
+                    self.pats.append(built_in_pat)
                 else:
                     raise ValueError(
-                        "pnlp: {} is not a valid RE pattern.".format(pat))
+                        "pnlp: {} \
+                        is not a valid built-in pattern.".format(pat))
+            elif isinstance(pat, re.Pattern):
+                self.pats.append(pat)
+            else:
+                raise ValueError(
+                    "pnlp: {} is not a valid RE pattern.".format(pat))
 
     def __repr__(self) -> str:
         return "Text(pattern=%r)" % str(self.pat)
