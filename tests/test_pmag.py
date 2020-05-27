@@ -1,13 +1,4 @@
-import os
-import sys
-import pytest
-import types
-
-ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(ROOT_PATH)
-
-
-from pmag import MagicDict
+from pnlp.pmag import MagicDict
 
 
 def test_MagicDict():

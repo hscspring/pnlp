@@ -1,16 +1,12 @@
 import os
-import sys
 import pytest
 import types
 
-ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(ROOT_PATH)
+from pnlp.piop import write_json, write_file
+from pnlp.piop import Reader, read_file, read_lines, read_json, read_yml
+from pnlp.piop import check_dir
 
-from piop import write_json, write_file
-from piop import Reader, read_file, read_lines, read_json, read_yml
-from piop import check_dir
-
-DATA_PATH = os.path.join(ROOT_PATH, 'tests', 'piop_data')
+DATA_PATH = os.path.join('tests', 'piop_data')
 
 
 @pytest.fixture(params=['*.md', '*.txt', '*.data', 'f*.*', '*c.*'])

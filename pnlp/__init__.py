@@ -5,9 +5,11 @@ from .ptxt import Regex, Text, Length
 from .ptxt import cut_sentence
 from .pmag import MagicDict
 
+from .stopwords import chinese_stopwords, english_stopwords, StopWords
+
 
 __title__ = 'pnlp'
-__version__ = '0.24'
+__version__ = '0.25'
 __author__ = 'Yam'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2019, 2020 Yam'

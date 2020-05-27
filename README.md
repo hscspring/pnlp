@@ -207,6 +207,21 @@ print(sent_list)
 """
 ```
 
+### StopWords
+
+```python
+from pnlp import StopWords, chinese_stopwords, english_stopwords
+
+csw = StopWords("/path/to/custom/stopwords.txt")
+csw.stopwords # a set of the custom stopwords
+
+csw.zh == chinese_stopwords # Chineses stopwords
+csw.en == english_stopwords # English stopwords
+```
+
+
+
+
 ### Length
 
 ```python
@@ -267,14 +282,18 @@ print(pmag.MagicDict.reverse(dx))
 Clone the repo and enter the tests directory: 
 
 ```bash
-$ pytest
+$ python -m pytest
 ```
 
 ## ChangeLog
 
+### v0.25
+
+Add `stop_words`. 
+
 ### v0.24
 
-Add `stop_words`. Fix `read_json`.
+Fix `read_json`.
 
 ### v0.23
 

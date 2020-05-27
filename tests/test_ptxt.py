@@ -1,13 +1,7 @@
-import os
 import re
-import sys
 import pytest
-import types
 
-ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(ROOT_PATH)
-
-from ptxt import Text, Regex, Length, cut_sentence
+from pnlp.ptxt import Text, Regex, Length, cut_sentence
 reg = Regex()
 
 
