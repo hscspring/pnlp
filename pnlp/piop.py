@@ -3,6 +3,7 @@
 from addict import Dict
 import json
 import os
+import csv
 import pathlib
 import yaml
 
@@ -123,13 +124,22 @@ def read_lines(fpath: str, **kwargs) -> list:
     return res
 
 
+def read_csv(fpath: str, delimiter: str = ","):
+    data = []
+    with open(fpath, 'r') as f:
+        fcsv = csv.reader(f, delimiter=delimiter)
+        for row in fcsv:
+            data.append(row)
+    return data
+
+
 def read_json(fpath: str, **kwargs):
     with open(fpath, 'r') as fin:
         data = json.load(fin, **kwargs)
     return data
 
 
-def read_yml(fpath: str):
+def read_yaml(fpath: str):
     with open(fpath, 'r') as fin:
         data = yaml.load(fin, Loader=yaml.SafeLoader)
     return data

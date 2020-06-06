@@ -4,7 +4,7 @@ import re
 psent = re.compile(r'''
     [。.！!?？…]+[”][。.!?！？…]?
     |
-    (?<=[a-zA-Z"”》）)〉〕】>」』\u4e00-\u9fa5])[.。！!?？…；～~]+
+    (?<=[a-zA-Z"”》）)〉〕】>」』\u4e00-\u9fa5])[.。！!?？…～~]+
     ''', re.UNICODE | re.VERBOSE)
 
 

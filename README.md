@@ -106,7 +106,8 @@ import pnlp
 file_string = pnlp.read_file(file_path)
 file_list = pnlp.read_lines(file_path)
 file_json = pnlp.read_json(file_path)
-file_yml = pnlp.read_yml(file_path)
+file_yaml = pnlp.read_yaml(file_path)
+file_csv = pnlp.read_csv(file_path)
 
 # Write
 pnlp.write_json(file_path, data)
@@ -220,8 +221,6 @@ csw.en == english_stopwords # English stopwords
 ```
 
 
-
-
 ### Length
 
 ```python
@@ -286,6 +285,10 @@ $ python -m pytest
 ```
 
 ## ChangeLog
+
+### v0.26
+
+Add `read_csv`, remove `；` as a sentence cut standard.
 
 ### v0.25
 

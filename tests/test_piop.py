@@ -3,7 +3,7 @@ import pytest
 import types
 
 from pnlp.piop import write_json, write_file
-from pnlp.piop import Reader, read_file, read_lines, read_json, read_yml
+from pnlp.piop import Reader, read_file, read_lines, read_json, read_yaml, read_csv
 from pnlp.piop import check_dir
 
 DATA_PATH = os.path.join('tests', 'piop_data')
@@ -86,11 +86,16 @@ def test_read_json():
     }
 
 
-def test_read_yml():
-    data = read_yml(os.path.join(DATA_PATH, 'yml.yml'))
+def test_read_yaml():
+    data = read_yaml(os.path.join(DATA_PATH, 'yaml.yaml'))
     assert type(data) == dict
     assert data == {'元旦': ['新年快乐', '元旦快乐', '节日快乐'],
                     '周末': ['周末快乐！', '周末愉快！']}
+
+def test_read_csv():
+    data = read_csv(os.path.join(DATA_PATH, 'csv.csv'))
+    assert type(data) == list
+    assert data == [['id', 'title'], ['1', 'title1'], ['2', 'title2']]
 
 
 def test_write_json():
