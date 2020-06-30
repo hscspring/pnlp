@@ -195,6 +195,8 @@ def clean_text(text: str) -> str:
     return text
 ```
 
+### Cut
+
 #### SentenceCut
 
 ```python
@@ -207,6 +209,25 @@ print(sent_list)
 ['你好！', '欢迎使用。']
 """
 ```
+
+#### ChineseCharCut
+
+```python
+# Cut to Chinese chars
+from pnlp import cut_zhchar
+text = "你好，hello, 520 = ”我爱你“。"
+char_list = cut_zhchar(text)
+print(char_list)
+"""
+['你', '好', '，', 'hello', ',', ' ', '520', ' ', '=', ' ', '”', '我', '爱', '你', '“', '。']
+"""
+char_list = cut_zhchar(text, remove_blank=True)
+print(char_list)
+"""
+['你', '好', '，', 'hello', ',', '520', '=', '”', '我', '爱', '你', '“', '。']
+"""
+```
+
 
 ### StopWords
 
@@ -285,6 +306,10 @@ $ python -m pytest
 ```
 
 ## ChangeLog
+
+### v0.27
+
+Add `cut_zhchar`.
 
 ### v0.26
 

@@ -1,7 +1,7 @@
 import re
 import pytest
 
-from pnlp.ptxt import Text, Regex, Length, cut_sentence
+from pnlp.ptxt import Text, Regex, Length
 reg = Regex()
 
 
@@ -274,98 +274,6 @@ def test_Text_len_eng(text_len):
 def test_Text_len_num(text_len):
     res = Length(text_len).len_num
     assert res == 3
-
-
-def test_text2sent1():
-    text = "我喜欢你，你呢？哈哈，我不告诉你。"
-    ret = cut_sentence(text)
-    assert len(ret) == 2
-    assert ret[0] == "我喜欢你，你呢？"
-    assert ret[1] == "哈哈，我不告诉你。"
-
-
-def test_text2sent2():
-    text = "我喜欢你，你呢！哈哈，我不告诉你"
-    ret = cut_sentence(text)
-    assert len(ret) == 2
-    assert ret[0] == "我喜欢你，你呢！"
-    assert ret[1] == "哈哈，我不告诉你"
-
-
-def test_text2sent3():
-    text = "我喜欢你，「哈哈」。我不告诉你~~~"
-    ret = cut_sentence(text)
-    assert len(ret) == 2
-    assert ret[0] == "我喜欢你，「哈哈」。"
-    assert ret[1] == "我不告诉你~~~"
-
-
-def test_text2sent4():
-    text = "我喜欢你，“哈哈”.我不告诉你……"
-    ret = cut_sentence(text)
-    assert len(ret) == 2
-    assert ret[0] == "我喜欢你，“哈哈”."
-    assert ret[1] == "我不告诉你……"
-
-
-def test_text2sent5():
-    text = "我喜欢你，“哈哈” 我不告诉你；"
-    ret = cut_sentence(text)
-    assert len(ret) == 1
-    assert ret[0] == "我喜欢你，“哈哈” 我不告诉你；"
-
-
-def test_text2sent6():
-    text = "我喜欢你，“哈哈。” 我不告诉你!"
-    ret = cut_sentence(text)
-    assert len(ret) == 2
-    assert ret[0] == "我喜欢你，“哈哈。”"
-    assert ret[1] == " 我不告诉你!"
-
-
-def test_text2sent7():
-    text = "我喜欢你(haha). 我不告诉你～"
-    ret = cut_sentence(text)
-    assert len(ret) == 2
-    assert ret[0] == "我喜欢你(haha)."
-    assert ret[1] == " 我不告诉你～"
-
-
-def test_text2sent8():
-    text = "我喜欢你, “哈哈……”。“我不告诉你.”"
-    ret = cut_sentence(text)
-    assert len(ret) == 2
-    assert ret[0] == "我喜欢你, “哈哈……”。"
-    assert ret[1] == "“我不告诉你.”"
-
-
-def test_text2sent9():
-    text = "我喜欢你&“哈哈？”“我不告诉你”"
-    ret = cut_sentence(text)
-    assert len(ret) == 2
-    assert ret[0] == "我喜欢你&“哈哈？”"
-    assert ret[1] == "“我不告诉你”"
-
-
-def test_text2sent10():
-    text = "我喜欢你，"
-    ret = cut_sentence(text)
-    assert len(ret) == 1
-    assert ret[0] == "我喜欢你，"
-
-
-def test_text2sent11():
-    text = "我喜欢你"
-    ret = cut_sentence(text)
-    assert len(ret) == 1
-    assert ret[0] == "我喜欢你"
-
-
-def test_text2sent12():
-    text = "我喜欢\n你"
-    ret = cut_sentence(text)
-    assert len(ret) == 1
-    assert ret[0] == "我喜欢\n你"
 
 
 if __name__ == '__main__':
