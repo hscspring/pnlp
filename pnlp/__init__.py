@@ -19,7 +19,7 @@ reader = Reader()
 __title__ = 'pnlp'
 __version__ = '0.3.0'
 __author__ = 'Yam'
-__license__ = 'MIT'
+__license__ = 'Apache-2.0'
 __copyright__ = 'Copyright 2019, 2020 Yam'
-__all__ = ['Reader', 'Text', 'Regex', 'Length', 'MagicDict', 'Chinese2Arabic']
+__all__ = ['Reader', 'Text', 'Regex', 'Length', 'MagicDict', 'NumNorm']
 
