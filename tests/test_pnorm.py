@@ -266,7 +266,7 @@ def test_arabic2chinese31():
     assert c2a.num2zh(num) == "一百一十一万零一十一"
 
 
-def test_arabic2chinese_money2():
+def test_arabic2chinese_money1():
     num = 112
     assert c2a.num2zh(num).to_money() == "壹佰壹拾贰"
 
