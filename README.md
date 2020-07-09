@@ -311,7 +311,7 @@ print(pmag.MagicDict.reverse(dx))
 
 ## Test
 
-Clone the repo and enter the tests directory: 
+Clone the repo run:
 
 ```bash
 $ python -m pytest
