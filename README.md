@@ -4,7 +4,11 @@ This is a pre-processing tool for NLP.
 ## Features
 
 - a flexible pipe line for text io
-- a flexible tool for text clean and extract and kinds of length
+- a flexible tool for text clean and extract
+- Sentence cut and Chinese character cut
+- Chinese character normalization
+- kinds of length
+- stopwords
 - some magic usage in pre-processing
 
 ## Install
@@ -215,19 +219,27 @@ print(sent_list)
 ```python
 # Cut to Chinese chars
 from pnlp import cut_zhchar
-text = "你好，hello, 520 = ”我爱你“。"
+text = "你好，hello, 520 i love u. = ”我爱你“。"
 char_list = cut_zhchar(text)
 print(char_list)
 """
-['你', '好', '，', 'hello', ',', ' ', '520', ' ', '=', ' ', '”', '我', '爱', '你', '“', '。']
+['你', '好', '，', 'hello', ',', ' ', '520', ' ', 'i', ' ', 'love', ' ', 'u', '.', ' ', '=', ' ', '”', '我', '爱', '你', '“', '。']
 """
 char_list = cut_zhchar(text, remove_blank=True)
 print(char_list)
 """
-['你', '好', '，', 'hello', ',', '520', '=', '”', '我', '爱', '你', '“', '。']
+['你', '好', '，', 'hello', ',', '520', 'i', 'love', 'u', '.', '=', '”', '我', '爱', '你', '“', '。']
 """
 ```
 
+### Normalization
+
+```python
+from pnlp import num_norm
+num_norm.num2zh(1024) == "一千零二十四"
+num_norm.num2zh(1024).to_money() == "壹仟零贰拾肆"
+num_norm.zh2num("一千零二十四") == 1024
+```
 
 ### StopWords
 
@@ -306,6 +318,14 @@ $ python -m pytest
 ```
 
 ## ChangeLog
+
+### v0.3.0
+
+Update `cut_sentence`; Add `NumNorm`.
+
+### v0.28-29
+
+Update `cut_zhchar`.
 
 ### v0.27
 

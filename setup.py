@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pnlp",
-    version="0.27",
+    version="0.3.0",
     author="Yam",
     author_email="haoshaochun@gmail.com",
     description="A pre-processing tool for NLP.",
@@ -13,7 +13,9 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/hscspring/pnlp",
     include_package_data=True,
-    packages=setuptools.find_packages(),
+    # default is `setup.py` path, so do not need a `package_dir` attr
+    # if another dir, should be declared by `package_dir`
+    packages=setuptools.find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     install_requires=[
           'addict',
           'pyyaml',

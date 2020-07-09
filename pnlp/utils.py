@@ -8,3 +8,5 @@ class pstr(str):
                 continue
             result.append(c)
         return "".join(result)
+
+
