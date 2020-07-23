@@ -201,6 +201,30 @@ def clean_text(text: str) -> str:
 
 ### Cut
 
+#### AnypartCut
+
+```python
+# Cut by Regex
+from pnlp import cut_part, psent
+text = "你好！欢迎使用。"
+sent_list = cut_part(text, psent, with_spliter=True, with_offset=False)
+print(sent_list)
+"""
+['你好！', '欢迎使用。']
+"""
+pcustom_sent = re.compile(r'[。！]')
+sent_list = cut_part(text, pcustom_sent, with_spliter=False, with_offset=False)
+print(sent_list)
+"""
+['你好', '欢迎使用']
+"""
+sent_list = cut_part(text, pcustom_sent, with_spliter=False, with_offset=True)
+print(sent_list)
+"""
+[('你好', 0, 3), ('欢迎使用', 3, 8)]
+"""
+```
+
 #### SentenceCut
 
 ```python
@@ -231,6 +255,30 @@ print(char_list)
 ['你', '好', '，', 'hello', ',', '520', 'i', 'love', 'u', '.', '=', '”', '我', '爱', '你', '“', '。']
 """
 ```
+
+#### CombineBucket
+
+```python
+from pnlp import combine_bucket
+parts = [
+    '习近平指出',
+    '中方不仅维护中国人民生命安全和身体健康',
+    '也维护世界人民生命安全和身体健康',
+    '我们本着公开',
+    '透明'
+]
+buckets = combine_bucket(parts.copy(), 10, truncate=True, keep_remain=True)
+print(buckets)
+"""
+['习近平指出', 
+'中方不仅维护中国人民', 
+'生命安全和身体健康', 
+'也维护世界人民生命安', 
+'全和身体健康', 
+'我们本着公开透明']
+"""
+```
+
 
 ### Normalization
 
@@ -318,6 +366,10 @@ $ python -m pytest
 ```
 
 ## ChangeLog
+
+### v0.3.1
+
+Add `cut_part` to cut text to any parts by the given Regex Pattern; Add `combine_bucket` to combine any parts to buckets by the given threshold(length).
 
 ### v0.3.0
 

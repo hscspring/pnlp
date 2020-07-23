@@ -1,7 +1,7 @@
 import re
 import pytest
 
-from pnlp.pcut import cut_sentence, cut_zhchar
+from pnlp.pcut import cut_sentence, cut_zhchar, combine_bucket
 
 
 def test_text2zhchar1():
@@ -288,3 +288,70 @@ def test_text2sent15():
     assert len(ret) == 2
     assert ret == ["我喜欢\n", ".你"]
 
+
+@pytest.fixture
+def parts():
+    return [
+        '习近平指出',
+        '中方不仅维护中国人民生命安全和身体健康',
+        '也维护世界人民生命安全和身体健康',
+        '我们本着公开',
+        '透明',
+    ]
+
+
+def test_combine_bucket1(parts):
+    ret = combine_bucket(parts.copy(), 5)
+    assert ret == parts
+    ret = combine_bucket(parts.copy(), 10)
+    assert ret == [
+        '习近平指出',
+        '中方不仅维护中国人民生命安全和身体健康',
+        '也维护世界人民生命安全和身体健康',
+        '我们本着公开透明',
+    ]
+
+
+def test_combine_bucket2(parts):
+    ret = combine_bucket(parts.copy(), 5, truncate=True)
+    assert ret == [
+        '习近平指出',
+        '中方不仅维',
+        '也维护世界',
+        '我们本着公',
+        '透明'
+    ]
+    ret = combine_bucket(parts.copy(), 10, truncate=True)
+    assert ret == [
+        '习近平指出',
+        '中方不仅维护中国人民',
+        '也维护世界人民生命安',
+        '我们本着公开透明',
+    ]
+
+
+def test_combine_bucket3(parts):
+    ret = combine_bucket(parts.copy(), 5, truncate=True, keep_remain=True)
+    assert ret == [
+        '习近平指出',
+        '中方不仅维',
+        '护中国人民',
+        '生命安全和',
+        '身体健康',
+        '也维护世界',
+        '人民生命安',
+        '全和身体健',
+        '康',
+        '我们本着公',
+        '开',
+        '透明'
+    ]
+    ret = combine_bucket(parts.copy(), 10, truncate=True, keep_remain=True)
+    assert ret == [
+        '习近平指出',
+        '中方不仅维护中国人民',
+        '生命安全和身体健康',
+        '也维护世界人民生命安',
+        '全和身体健康',
+        '我们本着公开透明',
+    ]
