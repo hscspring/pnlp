@@ -289,6 +289,20 @@ def test_text2sent15():
     assert ret == ["我喜欢\n", ".你"]
 
 
+def test_text2sent16():
+    text = "我喜欢 .你"
+    ret = cut_sentence(text)
+    assert len(ret) == 2
+    assert ret == ["我喜欢 .", "你"]
+
+
+def test_text2sent17():
+    text = "我喜欢　.你"
+    ret = cut_sentence(text)
+    assert len(ret) == 2
+    assert ret == ["我喜欢　.", "你"]
+
+
 @pytest.fixture
 def parts():
     return [
