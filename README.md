@@ -369,11 +369,11 @@ $ python -m pytest
 
 ### v0.3.3
 
-- Fix url link and picture  `Regex` pattern.
+Fix url link and picture  `Regex` pattern.
 
 ### v0.3.2
 
-- Fix `cut_part` for sentence ends with a white space and a full stop. 
+Fix `cut_part` for sentence ends with a white space and a full stop. 
 
 ### v0.3.1
 
