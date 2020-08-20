@@ -95,11 +95,10 @@ class Regex:
         Picture pattern.
         """
         _ppic = re.compile(r'''
-                    !\[.*?\]\(.*?\.(jpeg|png|jpg|gif)\)
+                    !\[.*?\]\(.*?\.?(jpeg|png|jpg|gif)?\)
                     |
                     https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.(jpeg|png|jpg|gif)
-                    ''',
-                           re.UNICODE | re.VERBOSE)
+                    ''', re.UNICODE | re.VERBOSE)
         return _ppic
 
     @property
@@ -111,8 +110,9 @@ class Regex:
                     \[\w+?\]\(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)\)
                     |
                     https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)
-                    ''',
-                            re.UNICODE | re.VERBOSE)
+                    |
+                    (https?:\/\/)?www\.[-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)
+                    ''', re.UNICODE | re.VERBOSE)
         return _plink
 
     @property

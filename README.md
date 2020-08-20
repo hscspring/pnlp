@@ -367,6 +367,14 @@ $ python -m pytest
 
 ## ChangeLog
 
+### v0.3.3
+
+- Fix url link and picture  `Regex` pattern.
+
+### v0.3.2
+
+- Fix `cut_part` for sentence ends with a white space and a full stop. 
+
 ### v0.3.1
 
 Add `cut_part` to cut text to any parts by the given Regex Pattern; Add `combine_bucket` to combine any parts to buckets by the given threshold(length).

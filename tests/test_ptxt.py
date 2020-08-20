@@ -203,19 +203,19 @@ def test_Text_clean_pic(text_pic):
 
 @pytest.fixture
 def text_lnk():
-    text = "你好，这#￥是链接[link](https://yam.gift)测试http://yam.gift。"
+    text = "你好，www.g.com，这#￥是链接[link](https://yam.gift)测试http://yam.gift。"
     return text
 
 
 def test_Text_extract_lnk(text_lnk):
     res = Text(['lnk']).extract(text_lnk)
-    assert "".join(res.mats) == "[link](https://yam.gift)http://yam.gift"
-    assert res.text == "[link](https://yam.gift)http://yam.gift"
+    assert "".join(res.mats) == "www.g.com[link](https://yam.gift)http://yam.gift"
+    assert res.text == "www.g.com[link](https://yam.gift)http://yam.gift"
 
 
 def test_Text_clean_lnk(text_lnk):
     res = Text(['lnk']).clean(text_lnk)
-    assert res == "你好，这#￥是链接测试。"
+    assert res == "你好，，这#￥是链接测试。"
 
 
 @pytest.fixture
