@@ -218,6 +218,12 @@ def test_Text_clean_lnk(text_lnk):
     assert res == "你好，，这#￥是链接测试。"
 
 
+def test_markdown_link_with_whitespace_in_title():
+    text = """啊[Download | View](https://www.altova.com/xmlspy-xml-editor/download/)"""
+    res = Text(['lnk']).clean(text)
+    assert res == "啊"
+
+
 @pytest.fixture
 def text_emj():
     text = "你好，这#￥是表情😁测试😜🌹。"

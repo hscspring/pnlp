@@ -367,7 +367,7 @@ $ python -m pytest
 
 ## ChangeLog
 
-### v0.3.3
+### v0.3.3/4
 
 Fix url link and picture  `Regex` pattern.
 
