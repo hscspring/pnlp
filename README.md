@@ -3,13 +3,15 @@ This is a pre-processing tool for NLP.
 
 ## Features
 
-- a flexible pipe line for text io
-- a flexible tool for text clean and extract
+- A flexible pipe line for text io
+- A flexible tool for text clean and extract
+- Text enhancement
 - Sentence cut and Chinese character cut
+- Text bucket
 - Chinese character normalization
-- kinds of length
-- stopwords
-- some magic usage in pre-processing
+- Kinds of length
+- Stopwords
+- Some magic usage in pre-processing
 
 ## Install
 
@@ -279,6 +281,46 @@ print(buckets)
 """
 ```
 
+### Enhancement
+
+```python
+# Both Sampler support delete, swap and insert sampling method types.
+text = "人为什么活着？生而为人必须要有梦想！还要有尽可能多的精神体验。"
+# TokenLevel
+from pnlp import TokenLevelSampler
+tls = TokenLevelSampler()
+tls.make_samples(text)
+"""
+{'delete': '人为什么活着？生而为人必须要梦想！还要有尽可能多的精神体验。',
+ 'swap': '为人什么活着？生而为人必须要有梦想！还要有尽可能多的精神体验。',
+ 'insert': '人为什么活着？生而为人必须要有梦想！还还要有尽可能多的精神体验。',
+ 'together': '人什么着着活？生而必为为须要有梦想！还要有尽可能多的精神体验。'}
+"""
+# tokenizer is supported
+tls.make_samples(text, jieba.lcut)
+"""
+{'delete': '人为什么活着？生而为人要有梦想！还要有尽可能多的精神体验。',
+ 'swap': '为什么人活着？生而为人必须要有梦想！还要有尽可能多的精神体验。',
+ 'insert': '人为什么活着？生而为人必须要有梦想！还要还要有尽可能多的精神体验。',
+ 'together': '人为什么活着？生而为人人要有梦想！还要有多尽可能的精神体验。'}
+"""
+# SentenceLevel
+from pnlp import SentenceLevelSampler
+sls = SentenceLevelSampler()
+sls.make_samples(text)
+"""
+{'delete': '生而为人必须要有梦想！还要有尽可能多的精神体验。',
+ 'swap': '人为什么活着？还要有尽可能多的精神体验。生而为人必须要有梦想！',
+ 'insert': '人为什么活着？还要有尽可能多的精神体验。生而为人必须要有梦想！生而为人必须要有梦想！',
+ 'together': '生而为人必须要有梦想！人为什么活着？人为什么活着？'}
+"""
+```
+
+TokenLevelSampler Note:
+
+- It uses a default tokenizer for Chinese (Chinese Char Tokenizer) and English (Simple Whitespace Tokenizer).
+- The tokenizer could be anyone you like, but the output should be a list of tokens or a list of tuple pairs, each pair include a token and a part-of-speech.
+- It uses `stopwords` as default sample words and function part-of-speech as default sample pos. This means we only sampling those tokens who are in sample words or their pos in sample pos (if the just have a pos). You could customize as you like.
 
 ### Normalization
 
@@ -366,6 +408,10 @@ $ python -m pytest
 ```
 
 ## ChangeLog
+
+### v0.3.5
+
+Add text enhancement.
 
 ### v0.3.3/4
 

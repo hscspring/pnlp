@@ -9,4 +9,3 @@ class pstr(str):
             result.append(c)
         return "".join(result)
 
-

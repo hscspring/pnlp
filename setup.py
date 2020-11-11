@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pnlp",
-    version="0.3.4",
+    version="0.3.5",
     author="Yam",
     author_email="haoshaochun@gmail.com",
     description="A pre-processing tool for NLP.",
@@ -17,8 +17,9 @@ setuptools.setup(
     # if another dir, should be declared by `package_dir`
     packages=setuptools.find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     install_requires=[
-          'addict',
-          'pyyaml',
+        'addict',
+        'pyyaml',
+        'numpy'
     ],
     package_data={
         'pnlp': ["stopwords/*"],
