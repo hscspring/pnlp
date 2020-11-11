@@ -320,7 +320,7 @@ TokenLevelSampler Note:
 
 - It uses a default tokenizer for Chinese (Chinese Char Tokenizer) and English (Simple Whitespace Tokenizer).
 - The tokenizer could be anyone you like, but the output should be a list of tokens or a list of tuple pairs, each pair include a token and a part-of-speech.
-- It uses `stopwords` as default sample words and function part-of-speech as default sample pos. This means we only sampling those tokens who are in sample words or their pos in sample pos (if the just have a pos). You could customize as you like.
+- It uses `stopwords` as default sample words and function part-of-speech as default sample pos. This means we only sampling those tokens who are in the sample words or their pos are in the sample pos (if they just have a pos). You could customize them as you like.
 
 ### Normalization
 
