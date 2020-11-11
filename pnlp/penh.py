@@ -34,7 +34,8 @@ class Sampler:
         default_types = set(("delete", "swap", "insert"))
         for typ in self.types:
             if typ not in default_types:
-                raise ValueError("Type {} is not a valid type.".format(typ))
+                raise ValueError(
+                    "pnlp: Type {} is not a valid type.".format(typ))
 
 
 @dataclass
