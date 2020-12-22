@@ -15,6 +15,8 @@ This is a pre-processing tool for NLP.
 
 ## Install
 
+Need Python3.7+.
+
 `pip install pnlp`
 
 ## Usage
