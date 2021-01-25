@@ -1,5 +1,5 @@
-from .piop import read_file, read_lines, read_json, read_yaml, read_csv
-from .piop import write_file, write_json, check_dir
+from .piop import read_file, read_lines, read_json, read_yaml, read_csv, read_pickle
+from .piop import write_file, write_json, write_pickle, check_dir
 from .pcut import cut_sentence, cut_zhchar, cut_part, combine_bucket
 from .pcut import psent, psubsent
 
@@ -22,7 +22,7 @@ slsampler = SentenceLevelSampler()
 
 
 __title__ = 'pnlp'
-__version__ = '0.3.5'
+__version__ = '0.3.6'
 __author__ = 'Yam'
 __license__ = 'Apache-2.0'
 __copyright__ = 'Copyright 2019, 2020 Yam'

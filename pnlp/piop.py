@@ -2,6 +2,7 @@
 
 from addict import Dict
 import json
+import pickle
 import os
 import csv
 import pathlib
@@ -155,6 +156,17 @@ def write_file(fpath: str, data, **kwargs):
     with open(fpath, 'w', **kwargs) as fout:
         for line in data:
             fout.write(line + "\n")
+
+
+def read_pickle(fpath: str, **kwargs):
+    with open(fpath, "rb") as f:
+        data = pickle.load(f, **kwargs)
+    return data
+
+
+def write_pickle(fpath: str, data, **kwargs):
+    with open(fpath, "wb") as f:
+        pickle.dump(data, f, **kwargs)
 
 
 def check_dir(dirname: str):

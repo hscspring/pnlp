@@ -411,9 +411,14 @@ $ python -m pytest
 
 ## ChangeLog
 
+### v0.3.6
+
+Add pickle read and write.
+
 ### v0.3.5
 
 Add text enhancement.
+
 
 ### v0.3.3/4
 
@@ -466,4 +471,5 @@ Add `cut_sentence` method.
 ### v0.20
 
 Optimize several interface and make `Text` accept list of Regular Expression Patterns.
+
 
