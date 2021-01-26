@@ -411,7 +411,13 @@ $ python -m pytest
 
 ## ChangeLog
 
+
+### v0.3.7
+
+Add strip when reading text lines.
+
 ### v0.3.6
+
 
 Add pickle read and write.
 
@@ -471,5 +477,6 @@ Add `cut_sentence` method.
 ### v0.20
 
 Optimize several interface and make `Text` accept list of Regular Expression Patterns.
+
 
 

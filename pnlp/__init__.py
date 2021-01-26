@@ -1,17 +1,17 @@
-from .piop import read_file, read_lines, read_json, read_yaml, read_csv, read_pickle
-from .piop import write_file, write_json, write_pickle, check_dir
-from .pcut import cut_sentence, cut_zhchar, cut_part, combine_bucket
-from .pcut import psent, psubsent
+from pnlp.piop import read_file, read_lines, read_json, read_yaml, read_csv, read_pickle
+from pnlp.piop import write_file, write_json, write_pickle, check_dir
+from pnlp.pcut import cut_sentence, cut_zhchar, cut_part, combine_bucket
+from pnlp.pcut import psent, psubsent
 
-from .piop import Reader, Dict
-from .ptxt import Regex, Text, Length
-from .pnorm import NumNorm
-from .penh import TokenLevelSampler, SentenceLevelSampler
-from .pmag import MagicDict
-from .stopwords import StopWords
+from pnlp.piop import Reader, Dict
+from pnlp.ptxt import Regex, Text, Length
+from pnlp.pnorm import NumNorm
+from pnlp.penh import TokenLevelSampler, SentenceLevelSampler
+from pnlp.pmag import MagicDict
+from pnlp.stopwords import StopWords
 
-from .utils import pstr
-from .stopwords import chinese_stopwords, english_stopwords
+from pnlp.utils import pstr
+from pnlp.stopwords import chinese_stopwords, english_stopwords
 
 
 num_norm = NumNorm()
@@ -22,7 +22,7 @@ slsampler = SentenceLevelSampler()
 
 
 __title__ = 'pnlp'
-__version__ = '0.3.6'
+__version__ = '0.3.7'
 __author__ = 'Yam'
 __license__ = 'Apache-2.0'
 __copyright__ = 'Copyright 2019, 2020 Yam'

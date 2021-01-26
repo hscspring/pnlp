@@ -5,9 +5,9 @@ from itertools import chain
 
 import numpy as np
 
-from .pcut import cut_zhchar, cut_part, psent, psubsent
-from .ptxt import Regex
-from .stopwords import chinese_stopwords, english_stopwords
+from pnlp.pcut import cut_zhchar, cut_part, psent, psubsent
+from pnlp.ptxt import Regex
+from pnlp.stopwords import chinese_stopwords, english_stopwords
 
 reg = Regex()
 STOPWORDS = list(english_stopwords | chinese_stopwords)
