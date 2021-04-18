@@ -1,7 +1,7 @@
 import itertools
 import re
-from .ptxt import Regex
-from .utils import pstr
+from pnlp.ptxt import Regex
+from pnlp.utils import pstr
 
 
 psent = re.compile(r'''

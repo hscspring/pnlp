@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import re
 import math
 import itertools
@@ -5,6 +6,7 @@ import pytest
 import multiprocessing as mp
 
 from pnlp.utils import pstr, concurring, generate_batches_by_num
+from pnlp.utils import pstr, strip_text
 
 
 def test_pstr1():
@@ -86,3 +88,17 @@ def test_concurring_with_parameters():
     assert len(res) == 10
     res = list(itertools.chain(*res))
     assert len(res) == 25
+
+
+def test_strip_text_work():
+    assert strip_text(" 1", "left") == "1"
+    assert strip_text("1 ", "right") == "1"
+    assert strip_text(" 1 ", "both") == "1"
+    assert strip_text("1", None) == "1"
+
+
+def test_strip_text_not():
+    assert strip_text(" 1", "right") == " 1"
+    assert strip_text("1 ", "left") == "1 "
+    assert strip_text(" 1 ", "other") == " 1 "
+    assert strip_text(" 1 ", None) == " 1 "

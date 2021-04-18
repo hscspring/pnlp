@@ -482,13 +482,26 @@ $ python -m pytest
 
 ## ChangeLog
 
+<<<<<<< HEAD
 ### v0.3.6
 
 Add concurring and batch generator
+=======
+
+### v0.3.7
+
+Add strip when reading text lines.
+
+### v0.3.6
+
+
+Add pickle read and write.
+>>>>>>> c053a621edbe09686b42e4e9f6df97cf913b85b3
 
 ### v0.3.5
 
 Add text enhancement.
+
 
 ### v0.3.3/4
 
@@ -541,4 +554,6 @@ Add `cut_sentence` method.
 ### v0.20
 
 Optimize several interface and make `Text` accept list of Regular Expression Patterns.
+
+
 

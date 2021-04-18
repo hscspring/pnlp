@@ -2,10 +2,13 @@
 
 from addict import Dict
 import json
+import pickle
 import os
 import csv
 import pathlib
 import yaml
+
+from pnlp.utils import strip_text
 
 
 class Reader:
@@ -38,14 +41,14 @@ class Reader:
                 yield article
 
     @staticmethod
-    def gen_flines(articles: list):
+    def gen_flines(articles: list, strip: str = "right"):
         """
         Process each file to lines when io.TextIOWrapper is given.
         """
         for article in articles:
             lid = 0
             for line_content in article.f:
-                line_content = line_content.strip()
+                line_content = strip_text(line_content, strip)
                 if len(line_content) == 0:
                     continue
                 line = Dict()
@@ -56,21 +59,21 @@ class Reader:
                 yield line
 
     @staticmethod
-    def gen_plines(fpath: str):
+    def gen_plines(fpath: str, strip: str = "right"):
         """
         Process each file to lines when fpath is given.
         """
         with open(fpath, encoding='utf8') as f:
             for line in f:
-                line = line.strip()
+                line = strip_text(line, strip)
                 if len(line) == 0:
                     continue
                 yield line
 
     def __call__(self, dirname: str):
-        fpaths = self.gen_files(dirname, self.pattern)
-        articles = self.gen_articles(fpaths)
-        flines = self.gen_flines(articles)
+        fpaths = Reader.gen_files(dirname, self.pattern)
+        articles = Reader.gen_articles(fpaths)
+        flines = Reader.gen_flines(articles)
         for line in flines:
             yield line
 
@@ -95,7 +98,7 @@ def read_file(fpath: str, **kwargs) -> str:
     return data
 
 
-def read_lines(fpath: str, **kwargs) -> list:
+def read_lines(fpath: str, strip: str = "right", **kwargs) -> list:
     """
     Read file with `open` from file path.
 
@@ -103,6 +106,8 @@ def read_lines(fpath: str, **kwargs) -> list:
     ----------
     fpath: str
         File path.
+    strip: str
+        Strip method, could be "both", "left", "right" or None.
     kwargs: optional
         Other `open` support params. 
 
@@ -112,12 +117,12 @@ def read_lines(fpath: str, **kwargs) -> list:
 
     Notes
     -----
-    Blank line is ignored.
+    Blank line is ignored as default.
     """
     res = []
     with open(fpath, **kwargs) as f:
         for line in f:
-            line = line.strip()
+            line = strip_text(line, strip)
             if len(line) == 0:
                 continue
             res.append(line)
@@ -155,6 +160,17 @@ def write_file(fpath: str, data, **kwargs):
     with open(fpath, 'w', **kwargs) as fout:
         for line in data:
             fout.write(line + "\n")
+
+
+def read_pickle(fpath: str, **kwargs):
+    with open(fpath, "rb") as f:
+        data = pickle.load(f, **kwargs)
+    return data
+
+
+def write_pickle(fpath: str, data, **kwargs):
+    with open(fpath, "wb") as f:
+        pickle.dump(data, f, **kwargs)
 
 
 def check_dir(dirname: str):

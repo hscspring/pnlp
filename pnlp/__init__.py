@@ -1,18 +1,18 @@
-from .piop import read_file, read_lines, read_json, read_yaml, read_csv
-from .piop import write_file, write_json, check_dir
-from .pcut import cut_sentence, cut_zhchar, cut_part, combine_bucket
-from .pcut import psent, psubsent
+from pnlp.piop import read_file, read_lines, read_json, read_yaml, read_csv, read_pickle
+from pnlp.piop import write_file, write_json, write_pickle, check_dir
+from pnlp.pcut import cut_sentence, cut_zhchar, cut_part, combine_bucket
+from pnlp.pcut import psent, psubsent
 
-from .piop import Reader, Dict
-from .ptxt import Regex, Text, Length
-from .pnorm import NumNorm
-from .penh import TokenLevelSampler, SentenceLevelSampler
-from .pmag import MagicDict
-from .stopwords import StopWords
+from pnlp.piop import Reader, Dict
+from pnlp.ptxt import Regex, Text, Length
+from pnlp.pnorm import NumNorm
+from pnlp.penh import TokenLevelSampler, SentenceLevelSampler
+from pnlp.pmag import MagicDict
+from pnlp.stopwords import StopWords
+from pnlp.stopwords import chinese_stopwords, english_stopwords
 
-from .utils import pstr, concurring, divide2int
-from .utils import generate_batches_by_num, generate_batches_by_size
-from .stopwords import chinese_stopwords, english_stopwords
+from pnlp.utils import pstr, concurring, divide2int
+from pnlp.utils import generate_batches_by_num, generate_batches_by_size
 
 
 num_norm = NumNorm()
