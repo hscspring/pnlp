@@ -10,7 +10,8 @@ from .penh import TokenLevelSampler, SentenceLevelSampler
 from .pmag import MagicDict
 from .stopwords import StopWords
 
-from .utils import pstr
+from .utils import pstr, concurring, divide2int
+from .utils import generate_batches_by_num, generate_batches_by_size
 from .stopwords import chinese_stopwords, english_stopwords
 
 
@@ -22,7 +23,7 @@ slsampler = SentenceLevelSampler()
 
 
 __title__ = 'pnlp'
-__version__ = '0.3.5'
+__version__ = '0.3.6'
 __author__ = 'Yam'
 __license__ = 'Apache-2.0'
 __copyright__ = 'Copyright 2019, 2020 Yam'

@@ -1,4 +1,47 @@
-# pnlp
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Features](#features)
+- [Install](#install)
+- [Usage](#usage)
+  - [Iopipe](#iopipe)
+    - [IO process](#io-process)
+    - [Built-in Method](#built-in-method)
+  - [Text](#text)
+    - [Clean and Extract](#clean-and-extract)
+    - [Regex](#regex)
+  - [Cut](#cut)
+    - [AnypartCut](#anypartcut)
+    - [SentenceCut](#sentencecut)
+    - [ChineseCharCut](#chinesecharcut)
+    - [CombineBucket](#combinebucket)
+  - [Enhancement](#enhancement)
+  - [Normalization](#normalization)
+  - [StopWords](#stopwords)
+  - [Length](#length)
+  - [Magic](#magic)
+  - [Concurring](#concurring)
+- [Test](#test)
+- [ChangeLog](#changelog)
+  - [v0.3.6](#v036)
+  - [v0.3.5](#v035)
+  - [v0.3.3/4](#v0334)
+  - [v0.3.2](#v032)
+  - [v0.3.1](#v031)
+  - [v0.3.0](#v030)
+  - [v0.28-29](#v028-29)
+  - [v0.27](#v027)
+  - [v0.26](#v026)
+  - [v0.25](#v025)
+  - [v0.24](#v024)
+  - [v0.23](#v023)
+  - [v0.22](#v022)
+  - [v0.21](#v021)
+  - [v0.20](#v020)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 This is a pre-processing tool for NLP.
 
 ## Features
@@ -12,6 +55,7 @@ This is a pre-processing tool for NLP.
 - Kinds of length
 - Stopwords
 - Some magic usage in pre-processing
+- Tools like Concurring, generating batches
 
 ## Install
 
@@ -401,6 +445,33 @@ print(pmag.MagicDict.reverse(dx))
 """
 ```
 
+### Concurring
+
+```python
+import math
+def is_prime(x):
+    if x < 2:
+        return False
+    for i in range(2, int(math.sqrt(x)) + 1):
+        if x % i == 0:
+            return False
+    return True
+
+from pnlp import concurring
+@concurring
+def get_primes(lst):
+    res = []
+    for i in lst:
+        if is_prime(i):
+            res.append(i)
+    return res
+@concurrint(type="thread", max_workers=10)
+def get_primes(lst):
+    pass
+```
+
+`concurring` wrapper just make your original function concurring. 
+
 ## Test
 
 Clone the repo run:
@@ -410,6 +481,10 @@ $ python -m pytest
 ```
 
 ## ChangeLog
+
+### v0.3.6
+
+Add concurring and batch generator
 
 ### v0.3.5
 
