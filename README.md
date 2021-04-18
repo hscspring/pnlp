@@ -24,7 +24,7 @@
   - [Concurring](#concurring)
 - [Test](#test)
 - [ChangeLog](#changelog)
-  - [v0.3.6](#v036)
+  - [v0.3.7](#v037)
   - [v0.3.5](#v035)
   - [v0.3.3/4](#v0334)
   - [v0.3.2](#v032)
@@ -482,21 +482,9 @@ $ python -m pytest
 
 ## ChangeLog
 
-<<<<<<< HEAD
-### v0.3.6
-
-Add concurring and batch generator
-=======
-
 ### v0.3.7
 
-Add strip when reading text lines.
-
-### v0.3.6
-
-
-Add pickle read and write.
->>>>>>> c053a621edbe09686b42e4e9f6df97cf913b85b3
+Add concurring and batch generator
 
 ### v0.3.5
 

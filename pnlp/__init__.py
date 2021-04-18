@@ -23,7 +23,7 @@ slsampler = SentenceLevelSampler()
 
 
 __title__ = 'pnlp'
-__version__ = '0.3.6'
+__version__ = '0.3.7'
 __author__ = 'Yam'
 __license__ = 'Apache-2.0'
 __copyright__ = 'Copyright 2019, 2020 Yam'
