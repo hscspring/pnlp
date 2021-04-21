@@ -71,10 +71,13 @@ def test_concurring_default():
     assert len(res) == 25
 
 
+@pytest.mark.parametrize(
+    "type",
+    ["thread_pool", "process_pool", "thread_executor", "thread"])
+@pytest.mark.parametrize("max_workers", [1, 2, 4, 7, 10])
+def test_concurring_with_parameters(type, max_workers):
 
-def test_concurring_with_parameters():
-
-    @concurring(type="thread", max_workers=10)
+    @concurring(type=type, max_workers=max_workers)
     def get_primes(lst):
         res = []
         for i in lst:
@@ -84,9 +87,39 @@ def test_concurring_with_parameters():
     lst = list(range(100))
     res = get_primes(lst)
     res = list(res)
-    assert len(res) == 10
+    assert len(res) == max_workers
     res = list(itertools.chain(*res))
     assert len(res) == 25
+
+
+def test_concurring_invalid_type():
+
+    @concurring(type="invalid")
+    def get_primes(lst):
+        res = []
+        for i in lst:
+            if is_prime(i):
+                res.append(i)
+        return res
+    lst = list(range(100))
+    try:
+        res = get_primes(lst)
+    except Exception as err:
+        assert "invalid" in str(err)
+
+
+def test_concurring_invalid_workers():
+
+    try:
+        @concurring(max_workers=0)
+        def get_primes(lst):
+            res = []
+            for i in lst:
+                if is_prime(i):
+                    res.append(i)
+            return res
+    except Exception as err:
+        assert "0" in str(err)
 
 
 def test_strip_text_work():

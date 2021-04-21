@@ -24,6 +24,7 @@
   - [Concurring](#concurring)
 - [Test](#test)
 - [ChangeLog](#changelog)
+  - [v0.3.8](#v038)
   - [v0.3.7](#v037)
   - [v0.3.5](#v035)
   - [v0.3.3/4](#v0334)
@@ -481,6 +482,10 @@ $ python -m pytest
 ```
 
 ## ChangeLog
+
+### v0.3.8
+
+Fix `concurring` for multiple processing.
 
 ### v0.3.7
 
