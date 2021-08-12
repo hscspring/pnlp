@@ -38,6 +38,11 @@ def test_Reader_gen_files():
     assert isinstance(paths, types.GeneratorType) == True
     assert len(list(paths)) == 3
 
+def test_Reader_gen_files_with_regex():
+    paths = Reader.gen_files(DATA_PATH, "(md)|(txt)", True)
+    assert isinstance(paths, types.GeneratorType) == True
+    assert len(list(paths)) == 6
+
 
 def test_Reader_gen_articles():
     paths = Reader.gen_files(DATA_PATH, '*.txt')

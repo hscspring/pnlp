@@ -24,22 +24,6 @@
   - [Concurring](#concurring)
 - [Test](#test)
 - [ChangeLog](#changelog)
-  - [v0.3.8](#v038)
-  - [v0.3.7](#v037)
-  - [v0.3.5](#v035)
-  - [v0.3.3/4](#v0334)
-  - [v0.3.2](#v032)
-  - [v0.3.1](#v031)
-  - [v0.3.0](#v030)
-  - [v0.28-29](#v028-29)
-  - [v0.27](#v027)
-  - [v0.26](#v026)
-  - [v0.25](#v025)
-  - [v0.24](#v024)
-  - [v0.23](#v023)
-  - [v0.22](#v022)
-  - [v0.21](#v021)
-  - [v0.20](#v020)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -94,8 +78,8 @@ import os
 from pnlp import Reader
 
 DATA_PATH = "./pnlp/tests/piop_data/"
-pattern = '*.md' # also could be '*.txt', 'f*.*', etc.
-reader = Reader(pattern)
+pattern = '*.md' # also could be '*.txt', 'f*.*', etc. SUPPORT regex
+reader = Reader(pattern, use_regex=True)
 
 # Get lines of all files in one directory with line index and file name
 for line in reader(DATA_FOLDER_PATH):
@@ -483,68 +467,71 @@ $ python -m pytest
 
 ## ChangeLog
 
-### v0.3.8
+**v0.3.9**
+
+`Reader` support regex.
+
+**v0.3.8**
 
 Fix `concurring` for multiple processing.
 
-### v0.3.7
+**v0.3.7**
 
 Add concurring and batch generator
 
-### v0.3.5
+**v0.3.5**
 
 Add text enhancement.
 
-
-### v0.3.3/4
+**v0.3.3/4**
 
 Fix url link and picture  `Regex` pattern.
 
-### v0.3.2
+**v0.3.2**
 
 Fix `cut_part` for sentence ends with a white space and a full stop. 
 
-### v0.3.1
+**v0.3.1**
 
 Add `cut_part` to cut text to any parts by the given Regex Pattern; Add `combine_bucket` to combine any parts to buckets by the given threshold(length).
 
-### v0.3.0
+**v0.3.0**
 
 Update `cut_sentence`; Add `NumNorm`.
 
-### v0.28-29
+**v0.28-29**
 
 Update `cut_zhchar`.
 
-### v0.27
+**v0.27**
 
 Add `cut_zhchar`.
 
-### v0.26
+**v0.26**
 
 Add `read_csv`, remove `；` as a sentence cut standard.
 
-### v0.25
+**v0.25**
 
 Add `stop_words`. 
 
-### v0.24
+**v0.24**
 
 Fix `read_json`.
 
-### v0.23
+**v0.23**
 
 Fix `Text` default rule.
 
-### v0.22
+**v0.22**
 
 Make `Text` more convenient to use.
 
-### v0.21
+**v0.21**
 
 Add `cut_sentence` method.
 
-### v0.20
+**v0.20**
 
 Optimize several interface and make `Text` accept list of Regular Expression Patterns.
 

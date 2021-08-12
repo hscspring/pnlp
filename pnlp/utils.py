@@ -20,7 +20,7 @@ class pstr(str):
 
 class ThreadWithReturnValue(Thread):
     """
-    modified from https://stackoverflow.com/questions/6893968/how-to-get-the-return-value-from-a-thread-in-python
+    referenced from https://stackoverflow.com/questions/6893968/how-to-get-the-return-value-from-a-thread-in-python
     """
 
     def __init__(
@@ -63,6 +63,7 @@ def generate_batches_by_num(lst: List[Any], batch_num: int
     return generate_batches_by_size(lst, batch_size)
 
 
+# referenced from: https://izziswift.com/python-multiprocessing-picklingerror-cant-pickle/
 def run_dill_encoded(payload):
     fun, args, kwargs = dill.loads(payload)
     return fun(*args, **kwargs)

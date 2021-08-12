@@ -4,6 +4,7 @@ from addict import Dict
 import json
 import pickle
 import os
+import re
 import csv
 import pathlib
 import yaml
@@ -12,15 +13,22 @@ from pnlp.utils import strip_text
 
 
 class Reader:
+    """
+    Parameters
+    -----------
+    pattern: path pattern, support Regex. default "*.*"
+    use_regex: whether to use Regex to compile the string pattern. default False
+    """
 
-    def __init__(self, pattern: str = "*.*"):
+    def __init__(self, pattern: str = "*.*", use_regex: bool = False):
         self.pattern = pattern
+        self.use_regex = use_regex
 
     def __repr__(self) -> str:
         return "Reader(pattern=%r)" % (self.pattern)
 
     @staticmethod
-    def gen_files(dirname: str, pattern: str = '*.*'):
+    def gen_files(dirname: str, pattern: str = "*.*", use_regex: bool = False):
         """
         Find all filenames in a directory tree that match the filepattern.
         If filepath is a file, yield the filepath directly.
@@ -28,13 +36,23 @@ class Reader:
         if os.path.isfile(dirname):
             fpath = pathlib.Path(dirname)
             yield fpath
-        for fpath in pathlib.Path(dirname).rglob(pattern):
-            yield fpath
+        if use_regex:
+            try:
+                pat = re.compile(pattern)
+            except Exception:
+                raise ValueError("hnlp: invalid pattern: {}".format(pattern))
+
+            for fpath in pathlib.Path(dirname).rglob("*.*"):
+                if pat.search(fpath.name):
+                    yield fpath
+        else:
+            for fpath in pathlib.Path(dirname).rglob(pattern):
+                yield fpath
 
     @staticmethod
     def gen_articles(fpaths: list):
         for fpath in fpaths:
-            with open(fpath, encoding='utf8') as f:
+            with open(fpath, encoding="utf8") as f:
                 article = Dict()
                 article.fname = fpath.name
                 article.f = f
@@ -63,7 +81,7 @@ class Reader:
         """
         Process each file to lines when fpath is given.
         """
-        with open(fpath, encoding='utf8') as f:
+        with open(fpath, encoding="utf8") as f:
             for line in f:
                 line = strip_text(line, strip)
                 if len(line) == 0:
@@ -71,7 +89,7 @@ class Reader:
                 yield line
 
     def __call__(self, dirname: str):
-        fpaths = Reader.gen_files(dirname, self.pattern)
+        fpaths = Reader.gen_files(dirname, self.pattern, self.use_regex)
         articles = Reader.gen_articles(fpaths)
         flines = Reader.gen_flines(articles)
         for line in flines:
@@ -87,7 +105,7 @@ def read_file(fpath: str, **kwargs) -> str:
     fpath: str
         File path.
     kwargs: optional
-        Other `open` support params. 
+        Other `open` support params.
 
     Returns
     --------
@@ -109,7 +127,7 @@ def read_lines(fpath: str, strip: str = "right", **kwargs) -> list:
     strip: str
         Strip method, could be "both", "left", "right" or None.
     kwargs: optional
-        Other `open` support params. 
+        Other `open` support params.
 
     Returns
     -------
@@ -131,7 +149,7 @@ def read_lines(fpath: str, strip: str = "right", **kwargs) -> list:
 
 def read_csv(fpath: str, delimiter: str = ","):
     data = []
-    with open(fpath, 'r') as f:
+    with open(fpath, "r") as f:
         fcsv = csv.reader(f, delimiter=delimiter)
         for row in fcsv:
             data.append(row)
@@ -139,25 +157,26 @@ def read_csv(fpath: str, delimiter: str = ","):
 
 
 def read_json(fpath: str, **kwargs):
-    with open(fpath, 'r') as fin:
+    with open(fpath, "r") as fin:
         data = json.load(fin, **kwargs)
     return data
 
 
 def read_yaml(fpath: str):
-    with open(fpath, 'r') as fin:
+    with open(fpath, "r") as fin:
         data = yaml.load(fin, Loader=yaml.SafeLoader)
     return data
 
 
 def write_json(fpath: str, data, **kwargs):
-    fout = open(fpath, 'w')
+    fout = open(fpath, "w")
+    kwargs["ensure_ascii"] = False
     json.dump(data, fout, **kwargs)
     fout.close()
 
 
 def write_file(fpath: str, data, **kwargs):
-    with open(fpath, 'w', **kwargs) as fout:
+    with open(fpath, "w", **kwargs) as fout:
         for line in data:
             fout.write(line + "\n")
 
