@@ -467,6 +467,10 @@ $ python -m pytest
 
 ## ChangeLog
 
+**v0.3.10**
+
+Fix piop `strip`.
+
 **v0.3.9**
 
 `Reader` support regex.

@@ -9,8 +9,6 @@ import csv
 import pathlib
 import yaml
 
-from pnlp.utils import strip_text
-
 
 class Reader:
     """
@@ -59,14 +57,14 @@ class Reader:
                 yield article
 
     @staticmethod
-    def gen_flines(articles: list, strip: str = "right"):
+    def gen_flines(articles: list, strip: str = "\n"):
         """
         Process each file to lines when io.TextIOWrapper is given.
         """
         for article in articles:
             lid = 0
             for line_content in article.f:
-                line_content = strip_text(line_content, strip)
+                line_content = line_content.strip(strip)
                 if len(line_content) == 0:
                     continue
                 line = Dict()
@@ -77,13 +75,13 @@ class Reader:
                 yield line
 
     @staticmethod
-    def gen_plines(fpath: str, strip: str = "right"):
+    def gen_plines(fpath: str, strip: str = "\n"):
         """
         Process each file to lines when fpath is given.
         """
         with open(fpath, encoding="utf8") as f:
             for line in f:
-                line = strip_text(line, strip)
+                line = line.strip(strip)
                 if len(line) == 0:
                     continue
                 yield line
@@ -116,7 +114,7 @@ def read_file(fpath: str, **kwargs) -> str:
     return data
 
 
-def read_lines(fpath: str, strip: str = "right", **kwargs) -> list:
+def read_lines(fpath: str, strip: str = "\n", **kwargs) -> list:
     """
     Read file with `open` from file path.
 
@@ -140,7 +138,7 @@ def read_lines(fpath: str, strip: str = "right", **kwargs) -> list:
     res = []
     with open(fpath, **kwargs) as f:
         for line in f:
-            line = strip_text(line, strip)
+            line = line.strip(strip)
             if len(line) == 0:
                 continue
             res.append(line)

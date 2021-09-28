@@ -139,14 +139,3 @@ def concurring(
             raise ValueError(err_info)
 
     return wrapper
-
-
-def strip_text(text: str, strip: str):
-    if strip == "both":
-        return text.strip()
-    elif strip == "left":
-        return text.lstrip()
-    elif strip == "right":
-        return text.rstrip()
-    else:
-        return text
