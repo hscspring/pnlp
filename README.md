@@ -467,6 +467,10 @@ $ python -m pytest
 
 ## ChangeLog
 
+**v0.3.11**
+
+Adjust `MagicDict` and `check_dir`.
+
 **v0.3.10**
 
 Fix piop `strip`.

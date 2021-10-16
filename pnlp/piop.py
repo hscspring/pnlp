@@ -190,8 +190,9 @@ def write_pickle(fpath: str, data, **kwargs):
         pickle.dump(data, f, **kwargs)
 
 
-def check_dir(dirname: str):
-    if os.path.exists(dirname):
-        pass
-    else:
-        os.makedirs(dirname)
+def check_dir(*args):
+    for dirname in args:
+        if os.path.exists(dirname):
+            pass
+        else:
+            os.makedirs(dirname)
