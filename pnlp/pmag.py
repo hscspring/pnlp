@@ -1,7 +1,8 @@
 from collections import Counter
+from addict import Dict
 
 
-class MagicDict(dict):
+class MagicDict(Dict):
 
     def __getitem__(self, item):
         try:
