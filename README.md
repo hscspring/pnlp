@@ -467,6 +467,12 @@ $ python -m pytest
 
 ## ChangeLog
 
+
+**v0.4.0**
+
+Make dataclass their right usage.
+
+
 **v0.3.11**
 
 Adjust `MagicDict` and `check_dir`.

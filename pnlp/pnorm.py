@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import TypeVar
 
 
@@ -73,7 +72,6 @@ class pnumstr(str):
         return self
 
 
-@dataclass
 class NumNorm:
     """
     Chinese_to_Arabic

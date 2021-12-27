@@ -1,5 +1,4 @@
 import copy
-from dataclasses import dataclass, field
 from typing import List, Dict, Callable, Tuple, Optional
 from itertools import chain
 
@@ -21,13 +20,12 @@ def swap(lst: list, index: int, start: int, end: int) -> list:
     """Randomly swap two continuous parts."""
     assert start <= index <= end <= len(lst) - 1
     if (index == start or np.random.rand() < 0.5) and index != end:
-        lst[index], lst[index+1] = lst[index+1], lst[index]
+        lst[index], lst[index + 1] = lst[index + 1], lst[index]
     else:
-        lst[index], lst[index-1] = lst[index-1], lst[index]
+        lst[index], lst[index - 1] = lst[index - 1], lst[index]
     return lst
 
 
-@dataclass
 class Sampler:
 
     def check_types(self):
@@ -38,9 +36,7 @@ class Sampler:
                     "pnlp: Type {} is not a valid type.".format(typ))
 
 
-@dataclass
 class TokenLevelSampler(Sampler):
-
     """
     Random choose an index.
     - Insert a copy token. Usually a function word.
@@ -61,50 +57,46 @@ class TokenLevelSampler(Sampler):
     then your input should include POS flags.
     2. The order of the `types` will influence the output of the dependent_sample.
     """
-    rate: float = 0.05
-    types: List[str] = field(
-        default_factory=lambda: ["delete", "swap", "insert"])
-    sample_words: List[str] = field(
-        default_factory=lambda: SAMPLE_WORDS)
-    sample_pos: List[str] = field(
-        default_factory=lambda: SAMPLE_POS)
 
-    def __post_init__(self):
-        self.len_types = len(self.types)
+    def __init__(
+        self,
+        rate: float = 0.05,
+        types: List[str] = ["delete", "swap", "insert"],
+        sample_words: List[str] = SAMPLE_WORDS,
+        sample_pos: List[str] = SAMPLE_POS,
+    ):
+        self.rate = rate
+        self.types = types
+        self.sample_words = sample_words
+        self.sample_pos = sample_pos
+        self.len_types = len(types)
         self.check_types()
         assert self.rate <= 0.1
 
     def filter_sample_idx(
-        self,
-        token_list: List[str or Tuple[str, str]]
-    ) -> List[int]:
+            self, token_list: List[str or Tuple[str, str]]) -> List[int]:
         if not token_list:
             return []
         if type(token_list[0]) == str:
-            can_deal_idx = [i for (i, w) in enumerate(
-                token_list) if w in self.sample_words]
+            can_deal_idx = [
+                i for (i, w) in enumerate(token_list) if w in self.sample_words
+            ]
         else:
-            can_deal_idx = [i for (i, (w, f)) in enumerate(
-                token_list) if f in self.sample_pos]
+            can_deal_idx = [
+                i for (i, (w, f)) in enumerate(token_list)
+                if f in self.sample_pos
+            ]
         return can_deal_idx
 
-    def choose_sample_idx(
-        self,
-        len_parts: int,
-        sample_count: int
-    ) -> List[int]:
+    def choose_sample_idx(self, len_parts: int, sample_count: int) -> List[int]:
         size = min(len_parts, sample_count)
-        sample_part_idx = np.random.choice(
-            len_parts, size, replace=False).tolist()
+        sample_part_idx = np.random.choice(len_parts, size,
+                                           replace=False).tolist()
         return sample_part_idx
 
-    def delete_sampling(
-        self,
-        token_list: List[str or Tuple[str, str]],
-        sample_idx: List[int]
-    ) -> List[str or Tuple[str, str]]:
-        """Simple delete sampling. Delete the tokens in the given indexes.
-        """
+    def delete_sampling(self, token_list: List[str or Tuple[str, str]],
+                        sample_idx: List[int]) -> List[str or Tuple[str, str]]:
+        """Simple delete sampling. Delete the tokens in the given indexes."""
         result = []
         for i, token in enumerate(token_list):
             if i in sample_idx:
@@ -112,13 +104,9 @@ class TokenLevelSampler(Sampler):
             result.append(token)
         return result
 
-    def insert_sampling(
-        self,
-        token_list: List[str or Tuple[str, str]],
-        sample_idx: List[int]
-    ) -> List[str or Tuple[str, str]]:
-        """Simple insert sampling. Insert the tokens in the given indexes.
-        """
+    def insert_sampling(self, token_list: List[str or Tuple[str, str]],
+                        sample_idx: List[int]) -> List[str or Tuple[str, str]]:
+        """Simple insert sampling. Insert the tokens in the given indexes."""
         result = []
         for i, token in enumerate(token_list):
             if i in sample_idx:
@@ -126,12 +114,9 @@ class TokenLevelSampler(Sampler):
             result.append(token)
         return result
 
-    def swap_sampling(
-        self,
-        token_list: List[str or Tuple[str, str]],
-        sample_idx: List[int]
-    ) -> List[str or Tuple[str, str]]:
-        """Simple swap sampling. Swap the tokens in the given indexes. 
+    def swap_sampling(self, token_list: List[str or Tuple[str, str]],
+                      sample_idx: List[int]) -> List[str or Tuple[str, str]]:
+        """Simple swap sampling. Swap the tokens in the given indexes.
         DONOT swap start and end.
         """
         result = copy.deepcopy(token_list)
@@ -143,8 +128,8 @@ class TokenLevelSampler(Sampler):
     def _sampling(
         self,
         type: str,
-        parts:  List[List[str] or List[Tuple[str, str]]],
-        sample_idx: List[int]
+        parts: List[List[str] or List[Tuple[str, str]]],
+        sample_idx: List[int],
     ) -> List[List[str] or List[Tuple[str, str]]]:
         """
         Sampling by part, each time deal with a part instead of a token.
@@ -166,8 +151,7 @@ class TokenLevelSampler(Sampler):
         return cp_parts
 
     def independent_sampling(
-        self,
-        token_list: List[str or Tuple[str, str]]
+        self, token_list: List[str or Tuple[str, str]]
     ) -> List[List[str] or List[Tuple[str, str]]]:
         result = []
         parts = self.convert_tokens_to_parts_by_nonword(token_list)
@@ -180,7 +164,7 @@ class TokenLevelSampler(Sampler):
         each_count = len(sample_part_idx) // self.len_types
 
         for i, typ in enumerate(self.types):
-            sample_idx = sample_part_idx[i*each_count: (i+1)*each_count]
+            sample_idx = sample_part_idx[i * each_count:(i + 1) * each_count]
             new_parts = self._sampling(typ, parts, sample_idx)
             sample = list(chain(*new_parts))
             result.append(sample)
@@ -188,8 +172,8 @@ class TokenLevelSampler(Sampler):
 
     def dependent_sampling(
         self,
-        token_list: List[str or Tuple[str, str]]
-    ) -> List[str or Tuple[str, str]]:
+        token_list: List[str or
+                         Tuple[str, str]]) -> List[str or Tuple[str, str]]:
         parts = self.convert_tokens_to_parts_by_nonword(token_list)
         len_parts = len(parts)
         len_tokens = len(token_list)
@@ -202,8 +186,7 @@ class TokenLevelSampler(Sampler):
         return list(chain(*parts))
 
     def convert_tokens_to_parts_by_nonword(
-        self,
-        token_list: List[str or Tuple[str, str]]
+        self, token_list: List[str or Tuple[str, str]]
     ) -> List[List[str] or List[Tuple[str, str]]]:
         parts = []
         tmp = []
@@ -232,8 +215,8 @@ class TokenLevelSampler(Sampler):
     def make_samples(
         self,
         text: str,
-        tokenizer: Optional[
-            Callable[[str], List[str or Tuple[str, str]]]] = None
+        tokenizer: Optional[Callable[[str], List[str or
+                                                 Tuple[str, str]]]] = None,
     ) -> Dict[str, str]:
         """
         Make negative samples.
@@ -253,7 +236,10 @@ class TokenLevelSampler(Sampler):
             if reg.pchi.search(text):
                 tokenizer = cut_zhchar
             else:
-                def tokenizer(x): return x.split()
+
+                def tokenizer(x):
+                    return x.split()
+
         tokens = tokenizer(text)
         if len(tokens) == 0:
             return {}
@@ -268,11 +254,9 @@ class TokenLevelSampler(Sampler):
         return result
 
 
-@dataclass
 class SentenceLevelSampler(Sampler):
-
     """
-    Random choose an index. 
+    Random choose an index.
     - Insert a copy.
     - Delete.
     - Swap with the prev or the next one.
@@ -285,10 +269,8 @@ class SentenceLevelSampler(Sampler):
     types: Sampling methods. You should take care of the order.
     """
 
-    types: List[str] = field(
-        default_factory=lambda: ["delete", "swap", "insert"])
-
-    def __post_init__(self):
+    def __init__(self, types: List[str] = ["delete", "swap", "insert"]):
+        self.types = types
         self.check_types()
 
     def independent_sampling(self, text_list: List[str]) -> List[List[str]]:
@@ -302,7 +284,7 @@ class SentenceLevelSampler(Sampler):
             elif typ == "delete":
                 new = [s for (i, s) in enumerate(text_list) if i != idx]
             else:
-                new = swap(text_list, idx, 0, length-1)
+                new = swap(text_list, idx, 0, length - 1)
             result.append(new)
         return result
 
@@ -320,7 +302,7 @@ class SentenceLevelSampler(Sampler):
             elif typ == "delete":
                 text_list = [s for (i, s) in enumerate(text_list) if i != idx]
             else:
-                text_list = swap(text_list, idx, 0, length-1)
+                text_list = swap(text_list, idx, 0, length - 1)
         return text_list
 
     def make_samples(self, text: str, level: str = "sent") -> List[str]:
