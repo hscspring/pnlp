@@ -1,11 +1,11 @@
 
 .PHONY: build
 build:
-	python3 setup.py sdist bdist_wheel
+	python3.8 setup.py sdist bdist_wheel
 
 .PHONY: upload
 upload:
-	python3 -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+	python3.8 -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
 
 .PHONY: clean
 clean:

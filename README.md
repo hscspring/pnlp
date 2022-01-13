@@ -467,6 +467,9 @@ $ python -m pytest
 
 ## ChangeLog
 
+**v0.4.1**
+
+Remove annotation `re.Pattern`
 
 **v0.4.0**
 

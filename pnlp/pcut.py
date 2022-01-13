@@ -3,15 +3,16 @@ import re
 from pnlp.ptxt import Regex
 from pnlp.utils import pstr
 
-
-psent = re.compile(r'''
+psent = re.compile(
+    r'''
     \n+
     |
     [。.！!?？…]+[”][。.!！?？…～~]?
     |
     (?<=[ \u3000a-zA-Z"”》）)〉〕】>」』\u4e00-\u9fa5])[。.!！?？…～~]+
     ''', re.UNICODE | re.VERBOSE)
-psubsent = re.compile(r'''
+psubsent = re.compile(
+    r'''
     \n+
     |
     [。.！!?？…]+[”][。.!！?？…～~]?
@@ -26,7 +27,8 @@ pzh = re.compile(rf"([\u4E00-\u9FD5{pun}+#&])", re.UNICODE)
 pen = re.compile(r"([a-zA-Z]+)", re.UNICODE)
 pskip = re.compile(r"(\s)", re.UNICODE)
 pspecial = re.compile(r"([-.])")  # split to single
-pnum = re.compile(r"""
+pnum = re.compile(
+    r"""
     ([-]?\d{1,}[.]?\d{0,}%)
     |
     ([-]?\d{1,}[./]?\d{0,})    
@@ -74,11 +76,10 @@ def cut_zhchar(text: str, remove_blank: bool = False) -> list:
     return lst
 
 
-def cut_part(
-        text: str,
-        split_pattern: re.Pattern,
-        with_spliter: bool = True,
-        with_offset: bool = False) -> list:
+def cut_part(text: str,
+             split_pattern,
+             with_spliter: bool = True,
+             with_offset: bool = False) -> list:
     """
     Cut text to parts by the given Regex Pattern.
 
@@ -121,11 +122,10 @@ def cut_sentence(text: str) -> list:
     return cut_part(text, psent, True, False)
 
 
-def combine_bucket(
-        parts: list,
-        threshold: int,
-        truncate: bool = False,
-        keep_remain: bool = False) -> list:
+def combine_bucket(parts: list,
+                   threshold: int,
+                   truncate: bool = False,
+                   keep_remain: bool = False) -> list:
     """
     Convert parts to buckets with given length(threshold).
 
@@ -140,13 +140,14 @@ def combine_bucket(
     out: list of bucket.
     -------
     """
+
     def deal_long_part(part: str) -> list:
         result = []
         if truncate:
             if keep_remain:
                 len_subparts = len(part) // threshold + 1
                 for i in range(len_subparts):
-                    sub_part = part[i*threshold: (i+1)*threshold]
+                    sub_part = part[i * threshold:(i + 1) * threshold]
                     if sub_part:
                         result.append(sub_part)
             else:
@@ -172,6 +173,3 @@ def combine_bucket(
             buckets.append([part])
     result = list(itertools.chain(*buckets))
     return result
-
-
-
