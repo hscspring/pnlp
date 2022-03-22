@@ -123,7 +123,7 @@ def read_lines(fpath: str, strip: str = "\n", **kwargs) -> list:
     fpath: str
         File path.
     strip: str
-        Strip method, could be "both", "left", "right" or None.
+        Strip method, could be strip string or None.
     kwargs: optional
         Other `open` support params.
 

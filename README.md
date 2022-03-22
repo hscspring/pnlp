@@ -362,6 +362,17 @@ num_norm.num2zh(1024).to_money() == "壹仟零贰拾肆"
 num_norm.zh2num("一千零二十四") == 1024
 ```
 
+### Transformation
+
+```python
+# entity bio to entities
+from pnlp import pick_entity_from_bio_labels
+pairs = ["天 B-LOC", "安 I-LOC", "门 I-LOC", "有 O", "毛 B-PER", "主 I-PER", "席 I-PER"]
+pick_entity_from_bio_labels(pairs)
+[('天安门', 'LOC'), ('毛主席', 'PER')]
+
+```
+
 ### StopWords
 
 ```python
@@ -466,6 +477,11 @@ $ python -m pytest
 ```
 
 ## ChangeLog
+
+
+**v0.4.1**
+
+Add bio label => entity
 
 **v0.4.1**
 

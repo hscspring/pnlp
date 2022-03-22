@@ -7,6 +7,7 @@ from pnlp.piop import Reader, Dict
 from pnlp.ptxt import Regex, Text, Length
 from pnlp.pnorm import NumNorm
 from pnlp.penh import TokenLevelSampler, SentenceLevelSampler
+from pnlp.ptrans import pick_entity_from_bio_labels
 from pnlp.pmag import MagicDict
 from pnlp.stopwords import StopWords
 from pnlp.stopwords import chinese_stopwords, english_stopwords
@@ -23,7 +24,7 @@ slsampler = SentenceLevelSampler()
 
 
 __title__ = 'pnlp'
-__version__ = '0.4.0'
+__version__ = '0.4.2'
 __author__ = 'Yam'
 __license__ = 'Apache-2.0'
 __copyright__ = 'Copyright 2019, 2020 Yam'
