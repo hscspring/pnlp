@@ -18,6 +18,7 @@
     - [CombineBucket](#combinebucket)
   - [Enhancement](#enhancement)
   - [Normalization](#normalization)
+  - [Transformation](#transformation)
   - [StopWords](#stopwords)
   - [Length](#length)
   - [Magic](#magic)
