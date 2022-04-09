@@ -18,9 +18,10 @@ class Reader:
     use_regex: whether to use Regex to compile the string pattern. default False
     """
 
-    def __init__(self, pattern: str = "*.*", use_regex: bool = False):
+    def __init__(self, pattern: str = "*.*", use_regex: bool = False, strip: str = "\n"):
         self.pattern = pattern
         self.use_regex = use_regex
+        self.strip = strip
 
     def __repr__(self) -> str:
         return "Reader(pattern=%r)" % (self.pattern)
@@ -38,7 +39,7 @@ class Reader:
             try:
                 pat = re.compile(pattern)
             except Exception:
-                raise ValueError("hnlp: invalid pattern: {}".format(pattern))
+                raise ValueError("pnlp: invalid pattern: {}".format(pattern))
 
             for fpath in pathlib.Path(dirname).rglob("*.*"):
                 if pat.search(fpath.name):
@@ -89,7 +90,7 @@ class Reader:
     def __call__(self, dirname: str):
         fpaths = Reader.gen_files(dirname, self.pattern, self.use_regex)
         articles = Reader.gen_articles(fpaths)
-        flines = Reader.gen_flines(articles)
+        flines = Reader.gen_flines(articles, self.strip)
         for line in flines:
             yield line
 
