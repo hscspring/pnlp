@@ -2,7 +2,8 @@ from typing import List, Tuple
 
 
 def pick_entity_from_bio_labels(
-        pairs: List[Tuple[str, str]]
+        pairs: List[Tuple[str, str]],
+        with_offset: bool = False
 ) -> List[Tuple[str, str]]:
     """
     Parameters
@@ -22,7 +23,10 @@ def pick_entity_from_bio_labels(
             res.append(c)
         return "".join(res), span[0][1].split("-")[-1]
 
-    pairs.append(("#", "O"))
+    without_lasto = False
+    if pairs and pairs[-1][1] != "O":
+        without_lasto = True
+        pairs.append(("#", "O"))
     bidx = []
     for i, (c, t) in enumerate(pairs):
         if t.startswith("B-"):
@@ -30,8 +34,14 @@ def pick_entity_from_bio_labels(
     bidx.append(len(pairs) - 1)
     res = []
     for i in range(len(bidx) - 1):
-        span = pairs[bidx[i]: bidx[i + 1]]
-        need = collect(span)
-        res.append(need)
-    pairs.pop()
+        start, end = bidx[i], bidx[i + 1]
+        span = pairs[start: end]
+        word, tag = collect(span)
+        if with_offset:
+            tup = (word, tag, start, start + len(word))
+        else:
+            tup = (word, tag)
+        res.append(tup)
+    if without_lasto:
+        pairs.pop()
     return res

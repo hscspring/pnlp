@@ -388,7 +388,7 @@ num_norm.zh2num("一千零二十四") == 1024
 ```python
 # entity bio to entities
 from pnlp import pick_entity_from_bio_labels
-pairs = ["天 B-LOC", "安 I-LOC", "门 I-LOC", "有 O", "毛 B-PER", "主 I-PER", "席 I-PER"]
+pairs = [('天', 'B-LOC'), ('安', 'I-LOC'), ('门', 'I-LOC'), ('有', 'O'), ('毛', 'B-PER'), ('主', 'I-PER'), ('席', 'I-PER')]
 pick_entity_from_bio_labels(pairs)
 """
 [('天安门', 'LOC'), ('毛主席', 'PER')]
@@ -513,6 +513,10 @@ $ python -m pytest
 ```
 
 ## ChangeLog
+
+**v0.4.4**
+
+Add loc to bio label => entity
 
 **v0.4.3**
 
