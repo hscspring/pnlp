@@ -393,6 +393,10 @@ pick_entity_from_bio_labels(pairs)
 """
 [('天安门', 'LOC'), ('毛主席', 'PER')]
 """
+pick_entity_from_bio_labels(pairs, with_offset=True)
+"""
+[('天安门', 'LOC', 0, 3), ('毛主席', 'PER', 4, 7)]
+"""
 ```
 
 ### Built-in Dicts
