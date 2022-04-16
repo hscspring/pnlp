@@ -9,10 +9,11 @@ def pick_entity_from_bio_labels(
     Parameters
     ----------
     pairs: List of tuple pairs, each pair contains a token and a bio tag
+    with_offset: whether to return locations for the entities
 
     Returns
     -------
-    List of entity pairs, each pair contains an entity and entity type
+    List of entity pairs, each pair contains an entity and entity type (migtht also a start and end index)
     """
 
     def collect(span: List[Tuple[str, str]]):
