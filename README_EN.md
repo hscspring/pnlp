@@ -518,7 +518,7 @@ $ python -m pytest
 
 ## ChangeLog
 
-**v0.4.4**
+**v0.4.5**
 
 Add loc to bio label => entity
 

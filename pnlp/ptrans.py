@@ -20,7 +20,7 @@ def pick_entity_from_bio_labels(
         res = []
         for c, t in span:
             if t.endswith("O"):
-                continue
+                break
             res.append(c)
         return "".join(res), span[0][1].split("-")[-1]
 
