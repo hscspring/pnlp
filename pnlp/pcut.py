@@ -26,12 +26,12 @@ pun = punzh + punen
 pzh = re.compile(rf"([\u4E00-\u9FD5{pun}+#&])", re.UNICODE)
 pen = re.compile(r"([a-zA-Z]+)", re.UNICODE)
 pskip = re.compile(r"(\s)", re.UNICODE)
-pspecial = re.compile(r"([-.])")  # split to single
+pspecial = re.compile(r"([\-.])")  # split to single
 pnum = re.compile(
     r"""
-    ([-]?\d{1,}[.]?\d{0,}%)
+    ([\-]?\d{1,}[.]?\d{0,}%)
     |
-    ([-]?\d{1,}[./]?\d{0,})    
+    ([\-]?\d{1,}[./]?\d{0,})
     """, re.UNICODE | re.VERBOSE)
 
 

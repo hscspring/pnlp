@@ -5,6 +5,20 @@ from pnlp.ptxt import Text, Regex, Length
 reg = Regex()
 
 
+@pytest.mark.parametrize("inp, expected", [
+    ("1.t", ""),
+    ("1,t", "1"),
+    (",1", "1"),
+])
+def test_regex_pnum(inp, expected):
+    match = reg.pnum.search(inp)
+    if match:
+        res = match.group()
+    else:
+        res = ""
+    assert res == expected
+
+
 @pytest.fixture(params=reg.patnames)
 def get_regex(request):
     return reg.patdict[request.param]
@@ -22,27 +36,27 @@ def get_patten(request):
 def test_Text_extract(get_patten):
     text = "这是，测试fdsf234*(&( 返回类型的文本。"
     res = Text(get_patten).extract(text)
-    assert isinstance(res, dict) == True
-    assert isinstance(res.mats, list) == True
-    assert isinstance(res.locs, list) == True
+    assert isinstance(res, dict)
+    assert isinstance(res.mats, list)
+    assert isinstance(res.locs, list)
 
 
 def test_Text_clean(get_patten):
     text = "这是，测试fdsf234*(&( 返回类型的文本。"
     res = Text(get_patten).clean(text)
-    assert isinstance(res, str) == True
+    assert isinstance(res, str)
 
 
 def test_pattern_string_invalid():
     try:
-        pt = Text(["XX"])
+        Text(["XX"])
     except Exception as e:
         assert "built-in" in str(e)
 
 
 def test_pattern_invalid():
     try:
-        pt = Text([lambda x: x])
+        Text([lambda x: x])
     except Exception as e:
         assert "RE" in str(e)
 
@@ -209,7 +223,8 @@ def text_lnk():
 
 def test_Text_extract_lnk(text_lnk):
     res = Text(['lnk']).extract(text_lnk)
-    assert "".join(res.mats) == "www.g.com[link](https://yam.gift)http://yam.gift"
+    assert "".join(
+        res.mats) == "www.g.com[link](https://yam.gift)http://yam.gift"
     assert res.text == "www.g.com[link](https://yam.gift)http://yam.gift"
 
 

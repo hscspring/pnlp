@@ -518,21 +518,26 @@ $ python -m pytest
 
 ## ChangeLog
 
+
+**v0.4.6**
+
+Fix regex: `-` if is used as string literal, should be transfered.
+
 **v0.4.5**
 
-Add loc to bio label => entity
+Add loc to bio label => entity.
 
 **v0.4.3**
 
-Adjust `Reader` init parameters
+Adjust `Reader` init parameters.
 
 **v0.4.2**
 
-Add bio label => entity
+Add bio label => entity.
 
 **v0.4.1**
 
-Remove annotation `re.Pattern`
+Remove annotation `re.Pattern`.
 
 **v0.4.0**
 

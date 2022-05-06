@@ -83,9 +83,9 @@ class Regex:
         2, +2, -2, 2.1, -2.2, 1/5, 2:3, -2/5, 2%, 2.5%
         """
         _pnum = re.compile(r'''
-                    [+-.]?\d+[.:/]?[\d%]+
+                    [+\-.]?\d+[.:/]?[\d%]+
                     |
-                    [+-.]?\d+(?!\.\w+)
+                    [+\-.]?\d+(?!\.\w+)
                     ''', re.UNICODE | re.VERBOSE)
         return _pnum
 
@@ -97,7 +97,7 @@ class Regex:
         _ppic = re.compile(r'''
                     !\[.*?\]\(.*?\.?(jpeg|png|jpg|gif)?\)
                     |
-                    https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.(jpeg|png|jpg|gif)
+                    https?:\/\/(www\.)?[\-a-zA-Z0-9@:%._\+~#=]{0,256}\.(jpeg|png|jpg|gif)
                     ''', re.UNICODE | re.VERBOSE)
         return _ppic
 
@@ -107,11 +107,11 @@ class Regex:
         Link pattern.
         """
         _plink = re.compile(r'''
-                    \[.+?\]\(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)\)
+                    \[.+?\]\(https?:\/\/(www\.)?[\-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([\-a-zA-Z0-9@:%_\+.~#?&//=]*)\)
                     |
-                    https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)
+                    https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([\-a-zA-Z0-9@:%_\+.~#?&//=]*)
                     |
-                    (https?:\/\/)?www\.[-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)
+                    (https?:\/\/)?www\.[-a-zA-Z0-9@:%._\+~#=]{0,256}\.[a-z]{2,6}\b([\-a-zA-Z0-9@:%_\+.~#?&//=]*)
                     ''', re.UNICODE | re.VERBOSE)
         return _plink
 

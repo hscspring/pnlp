@@ -23,15 +23,15 @@ tlsampler = TokenLevelSampler()
 slsampler = SentenceLevelSampler()
 
 
-__title__ = 'pnlp'
-__version__ = '0.4.5'
-__author__ = 'Yam'
-__license__ = 'Apache-2.0'
-__copyright__ = 'Copyright 2019, 2020 Yam'
-__all__ = ['Reader',
-           'Text', 'Regex', 'Length',
-           'MagicDict',
-           'NumNorm',
-           'StopWords',
-           'TokenLevelSampler', 'SentenceLevelSampler'
+__title__ = "pnlp"
+__version__ = "0.4.6"
+__author__ = "Yam"
+__license__ = "Apache-2.0"
+__copyright__ = "Copyright 2019, 2020 Yam"
+__all__ = ["Reader",
+           "Text", "Regex", "Length",
+           "MagicDict",
+           "NumNorm",
+           "StopWords",
+           "TokenLevelSampler", "SentenceLevelSampler"
            ]
