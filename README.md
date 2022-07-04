@@ -151,10 +151,14 @@ file_list = pnlp.read_lines(file_path)
 file_json = pnlp.read_json(file_path)
 file_yaml = pnlp.read_yaml(file_path)
 file_csv = pnlp.read_csv(file_path)
+file_pickle = pnlp.read_pickle(file_path)
+list_dict = pnlp.read_file_to_list_dict(file_path)
 
 # Write
 pnlp.write_json(file_path, data, indent=2)
 pnlp.write_file(file_path, data)
+pnlp.write_pickle(file_path, data)
+pnlp.write_list_dict_to_file(file_path, data)
 
 # Others
 pnlp.check_dir(dirname) # 如果目录不存在会创建

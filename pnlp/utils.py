@@ -5,6 +5,7 @@ from multiprocessing import Pool
 from multiprocessing.pool import ThreadPool
 from concurrent.futures import ThreadPoolExecutor
 from threading import Thread
+import numpy as np
 import dill
 
 
@@ -43,18 +44,22 @@ class ThreadWithReturnValue(Thread):
         return self._return
 
 
-def divide2int(y: int, x: int) -> int:
+def divide2int1(y: int, x: int) -> int:
     res = y // x
     if y % x != 0:
         res += 1
     return res
 
 
+def divide2int(y: int, x: int) -> int:
+    return np.ceil(y / x).astype(np.int_)
+
+
 def generate_batches_by_size(lst: List[Any], batch_size: int
                              ) -> Generator[List[Any], None, None]:
     batch_num = divide2int(len(lst), batch_size)
     for i in range(batch_num):
-        yield lst[i*batch_size: (i+1)*batch_size]
+        yield lst[i * batch_size: (i + 1) * batch_size]
 
 
 def generate_batches_by_num(lst: List[Any], batch_num: int
@@ -63,7 +68,8 @@ def generate_batches_by_num(lst: List[Any], batch_num: int
     return generate_batches_by_size(lst, batch_size)
 
 
-# referenced from: https://izziswift.com/python-multiprocessing-picklingerror-cant-pickle/
+# referenced from:
+# https://izziswift.com/python-multiprocessing-picklingerror-cant-pickle/
 def run_dill_encoded(payload):
     fun, args, kwargs = dill.loads(payload)
     return fun(*args, **kwargs)

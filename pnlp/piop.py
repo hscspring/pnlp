@@ -1,6 +1,7 @@
 # from __future__ import annotations
 
-from addict import Dict
+from typing import List, Dict, Union
+from addict import Dict as AdDict
 import json
 import pickle
 import os
@@ -18,7 +19,11 @@ class Reader:
     use_regex: whether to use Regex to compile the string pattern. default False
     """
 
-    def __init__(self, pattern: str = "*.*", use_regex: bool = False, strip: str = "\n"):
+    def __init__(
+            self,
+            pattern: str = "*.*",
+            use_regex: bool = False,
+            strip: str = "\n"):
         self.pattern = pattern
         self.use_regex = use_regex
         self.strip = strip
@@ -52,7 +57,7 @@ class Reader:
     def gen_articles(fpaths: list):
         for fpath in fpaths:
             with open(fpath, encoding="utf8") as f:
-                article = Dict()
+                article = AdDict()
                 article.fname = fpath.name
                 article.f = f
                 yield article
@@ -68,7 +73,7 @@ class Reader:
                 line_content = line_content.strip(strip)
                 if len(line_content) == 0:
                     continue
-                line = Dict()
+                line = AdDict()
                 line.lid = lid
                 line.fname = article.fname
                 line.text = line_content
@@ -115,7 +120,7 @@ def read_file(fpath: str, **kwargs) -> str:
     return data
 
 
-def read_lines(fpath: str, strip: str = "\n", **kwargs) -> list:
+def read_lines(fpath: str, strip: str = "\n", **kwargs) -> List[str]:
     """
     Read file with `open` from file path.
 
@@ -146,7 +151,7 @@ def read_lines(fpath: str, strip: str = "\n", **kwargs) -> list:
     return res
 
 
-def read_csv(fpath: str, delimiter: str = ","):
+def read_csv(fpath: str, delimiter: str = ",") -> List:
     data = []
     with open(fpath, "r") as f:
         fcsv = csv.reader(f, delimiter=delimiter)
@@ -155,43 +160,59 @@ def read_csv(fpath: str, delimiter: str = ","):
     return data
 
 
-def read_json(fpath: str, **kwargs):
+def read_json(fpath: str, **kwargs) -> Union[List, Dict]:
     with open(fpath, "r") as fin:
         data = json.load(fin, **kwargs)
     return data
 
 
-def read_yaml(fpath: str):
+def read_yaml(fpath: str) -> Dict:
     with open(fpath, "r") as fin:
         data = yaml.load(fin, Loader=yaml.SafeLoader)
     return data
 
 
-def write_json(fpath: str, data, **kwargs):
+def read_pickle(fpath: str, **kwargs) -> Union[List, Dict]:
+    with open(fpath, "rb") as f:
+        data = pickle.load(f, **kwargs)
+    return data
+
+
+def read_file_to_list_dict(inp_file: str) -> List[Dict]:
+    res = []
+    for line in read_lines(inp_file):
+        item = json.loads(line.strip())
+        res.append(item)
+    return res
+
+
+def write_list_dict_to_file(out_file: str, data: List[Dict]) -> None:
+    fo = open(out_file, "w")
+    for item in data:
+        line = json.dumps(item, ensure_ascii=False)
+        fo.write(line)
+        fo.write("\n")
+
+
+def write_json(fpath: str, data, **kwargs) -> None:
     fout = open(fpath, "w")
     kwargs["ensure_ascii"] = False
     json.dump(data, fout, **kwargs)
     fout.close()
 
 
-def write_file(fpath: str, data, **kwargs):
+def write_file(fpath: str, data, **kwargs) -> None:
     with open(fpath, "w", **kwargs) as fout:
         for line in data:
             fout.write(line + "\n")
 
 
-def read_pickle(fpath: str, **kwargs):
-    with open(fpath, "rb") as f:
-        data = pickle.load(f, **kwargs)
-    return data
-
-
-def write_pickle(fpath: str, data, **kwargs):
+def write_pickle(fpath: str, data, **kwargs) -> None:
     with open(fpath, "wb") as f:
         pickle.dump(data, f, **kwargs)
 
 
-def check_dir(*args):
+def check_dir(*args) -> None:
     for dirname in args:
         if os.path.exists(dirname):
             pass

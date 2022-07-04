@@ -4,6 +4,7 @@ import types
 
 from pnlp.piop import write_json, write_file
 from pnlp.piop import Reader, read_file, read_lines, read_json, read_yaml, read_csv
+from pnlp.piop import read_file_to_list_dict, write_list_dict_to_file
 from pnlp.piop import check_dir
 
 DATA_PATH = os.path.join('tests', 'piop_data')
@@ -35,19 +36,20 @@ def test_Reader_file():
 
 def test_Reader_gen_files():
     paths = Reader.gen_files(DATA_PATH, '*.md')
-    assert isinstance(paths, types.GeneratorType) == True
+    assert isinstance(paths, types.GeneratorType)
     assert len(list(paths)) == 3
+
 
 def test_Reader_gen_files_with_regex():
     paths = Reader.gen_files(DATA_PATH, "(md)|(txt)", True)
-    assert isinstance(paths, types.GeneratorType) == True
+    assert isinstance(paths, types.GeneratorType)
     assert len(list(paths)) == 6
 
 
 def test_Reader_gen_articles():
     paths = Reader.gen_files(DATA_PATH, '*.txt')
     articles = Reader.gen_articles(paths)
-    assert isinstance(articles, types.GeneratorType) == True
+    assert isinstance(articles, types.GeneratorType)
     assert len(list(articles)) == 3
 
 
@@ -55,13 +57,13 @@ def test_Reader_gen_flines():
     paths = Reader.gen_files(DATA_PATH, '*.txt')
     articles = Reader.gen_articles(paths)
     lines = Reader.gen_flines(articles)
-    assert isinstance(lines, types.GeneratorType) == True
+    assert isinstance(lines, types.GeneratorType)
     assert len(list(lines)) == 9
 
 
 def test_Reader_gen_plines():
     lines = Reader.gen_plines(os.path.join(DATA_PATH, 'b.txt'))
-    assert isinstance(lines, types.GeneratorType) == True
+    assert isinstance(lines, types.GeneratorType)
     assert len(list(lines)) == 3
 
 
@@ -97,10 +99,17 @@ def test_read_yaml():
     assert data == {'元旦': ['新年快乐', '元旦快乐', '节日快乐'],
                     '周末': ['周末快乐！', '周末愉快！']}
 
+
 def test_read_csv():
     data = read_csv(os.path.join(DATA_PATH, 'csv.csv'))
     assert type(data) == list
     assert data == [['id', 'title'], ['1', 'title1'], ['2', 'title2']]
+
+
+def test_read_file_to_list_dict():
+    data = read_file_to_list_dict(os.path.join(DATA_PATH, "list_dict.json"))
+    assert type(data) == list
+    assert type(data[0]) == dict
 
 
 def test_write_json():
@@ -114,10 +123,11 @@ def test_write_file():
     data = ['line 1 of outfile.', '这是 outfile 的第二行。']
     write_file(os.path.join(DATA_PATH, 'outfile.file'), data)
 
+
+def test_write_list_dict_to_file():
+    data = [{"name": "Yam", "age": 20}]
+    write_list_dict_to_file(os.path.join(DATA_PATH, "outfile.listdict"), data)
+
+
 def test_check_dir():
-    assert check_dir(DATA_PATH) == None
-
-
-if __name__ == '__main__':
-    print(ROOT_PATH)
-    print(IODATA_PATH)
+    assert check_dir(DATA_PATH) is None
