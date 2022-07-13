@@ -28,7 +28,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-This is a pre-processing tool for NLP.
+This is a pre/post-processing tool for NLP.
 
 ## Features
 

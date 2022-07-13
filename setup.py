@@ -8,7 +8,7 @@ setuptools.setup(
     version="0.4.7",
     author="Yam",
     author_email="haoshaochun@gmail.com",
-    description="A pre-processing tool for NLP.",
+    description="A pre/post-processing tool for NLP.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/hscspring/pnlp",
