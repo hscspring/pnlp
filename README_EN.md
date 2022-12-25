@@ -522,6 +522,13 @@ $ python -m pytest
 
 ## ChangeLog
 
+**v0.4.8**
+
+Opt: read `count` lines of a text file for api `read_lines`
+
+**v0.4.7**
+
+Add `write_list_dict_to_file` and `read_file_to_list_dict`
 
 **v0.4.6**
 

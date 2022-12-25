@@ -120,7 +120,12 @@ def read_file(fpath: str, **kwargs) -> str:
     return data
 
 
-def read_lines(fpath: str, strip: str = "\n", **kwargs) -> List[str]:
+def read_lines(
+    fpath: str,
+    strip: str = "\n",
+    count: int = -1,
+    **kwargs
+) -> List[str]:
     """
     Read file with `open` from file path.
 
@@ -129,7 +134,9 @@ def read_lines(fpath: str, strip: str = "\n", **kwargs) -> List[str]:
     fpath: str
         File path.
     strip: str
-        Strip method, could be strip string or None.
+        Strip method, could be strip string or None, default is "\n".
+    count: int
+        How many lines to read, default is -1 (all).
     kwargs: optional
         Other `open` support params.
 
@@ -142,12 +149,16 @@ def read_lines(fpath: str, strip: str = "\n", **kwargs) -> List[str]:
     Blank line is ignored as default.
     """
     res = []
+    i = 0
     with open(fpath, **kwargs) as f:
         for line in f:
+            if count >= 0 and i >= count:
+                break
             line = line.strip(strip)
-            if len(line) == 0:
+            if not line:
                 continue
             res.append(line)
+            i += 1
     return res
 
 

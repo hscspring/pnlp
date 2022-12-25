@@ -78,9 +78,13 @@ def test_read_file(get_read_data):
     assert type(data) == str
 
 
-def test_read_lines(get_read_data):
-    data = read_lines(get_read_data)
-    assert data == ['line 1 in c.', 'line 2 in c.', 'line 3 in c.']
+@pytest.mark.parametrize("count", [0, 1, 2, -1])
+def test_read_lines(get_read_data, count):
+    data = read_lines(get_read_data, count=count)
+    if count != -1:
+        assert len(data) == count
+    else:
+        assert data == ['line 1 in c.', 'line 2 in c.', 'line 3 in c.']
     assert type(data) == list
 
 
