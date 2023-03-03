@@ -541,7 +541,7 @@ $ python -m pytest
 
 ## ChangeLog
 
-**v0.4.8**
+**v0.4.9**
 
 Add: `generate_uuid` given by arbitrary parameters.
 
