@@ -403,6 +403,19 @@ pick_entity_from_bio_labels(pairs, with_offset=True)
 """
 ```
 
+#### Parameters2uuid
+
+```python
+from pnlp import generate_uuid
+
+uid1 = pnlp.generate_uuid("a", 1, 0.02)
+uid2 = pnlp.generete_uuid("a", 1)
+"""
+uid1 == 3fbc8b70d05b5abdb5badca1d26e1dbd
+uid2 == f7b0ffc589e453e88d4faf66eb92f669
+"""
+```
+
 ### Built-in Dicts
 
 #### StopWords
@@ -510,7 +523,7 @@ def get_primes(lst):
     pass
 ```
 
-`concurring` wrapper just make your original function concurring. 
+`concurring` wrapper just make your original function concurring.  
 
 ## Test
 
@@ -521,6 +534,10 @@ $ python -m pytest
 ```
 
 ## ChangeLog
+
+**v0.4.8**
+
+Add: `generate_uuid` given by arbitrary parameters.
 
 **v0.4.8**
 

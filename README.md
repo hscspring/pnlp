@@ -413,6 +413,19 @@ pick_entity_from_bio_labels(pairs, with_offset=True)
 """
 ```
 
+#### 任意参数转UUID
+
+```python
+from pnlp import generate_uuid
+
+uid1 = pnlp.generate_uuid("a", 1, 0.02)
+uid2 = pnlp.generete_uuid("a", 1)
+"""
+uid1 == 3fbc8b70d05b5abdb5badca1d26e1dbd
+uid2 == f7b0ffc589e453e88d4faf66eb92f669
+"""
+```
+
 ### 内置词典
 
 #### 停用词

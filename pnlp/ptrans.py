@@ -1,4 +1,13 @@
 from typing import List, Tuple
+import uuid
+
+
+def generate_uuid(*args) -> str:
+    s = uuid.uuid5(
+        uuid.NAMESPACE_URL,
+        " ".join(map(str, args))
+    )
+    return s.hex
 
 
 def pick_entity_from_bio_labels(

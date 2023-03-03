@@ -1,6 +1,6 @@
 import pytest
 
-from pnlp.ptrans import pick_entity_from_bio_labels
+from pnlp.ptrans import pick_entity_from_bio_labels, generate_uuid
 
 
 @pytest.mark.parametrize("pairs,result", [
@@ -43,3 +43,13 @@ def test_pick_entity_from_bio_labels(pairs, result):
 def test_pick_entity_from_bio_labels_with_offset(pairs, result):
     entities = pick_entity_from_bio_labels(pairs, True)
     assert entities == result
+
+
+@pytest.mark.parametrize("inp", [
+    (("a", 1, 0.5)),
+    (("好", 1, 0.5)),
+])
+def test_generate_uuid(inp):
+    uid = generate_uuid(*inp)
+    assert type(uid) == str
+    assert len(uid) == 32
