@@ -46,7 +46,7 @@ class Reader:
             except Exception:
                 raise ValueError("pnlp: invalid pattern: {}".format(pattern))
 
-            for fpath in pathlib.Path(dirname).rglob("*.*"):
+            for fpath in pathlib.Path(dirname).rglob("*"):
                 if pat.search(fpath.name):
                     yield fpath
         else:
@@ -100,7 +100,7 @@ class Reader:
             yield line
 
 
-def read_file(fpath: str, **kwargs) -> str:
+def read_file(fpath: str, encoding="utf-8", **kwargs) -> str:
     """
     Read file from file path.
 
@@ -115,7 +115,7 @@ def read_file(fpath: str, **kwargs) -> str:
     --------
         data string of the file.
     """
-    with open(fpath, **kwargs) as f:
+    with open(fpath, encoding="utf-8", **kwargs) as f:
         data = f.read()
     return data
 
