@@ -5,7 +5,7 @@ build:
 
 .PHONY: upload
 upload:
-	python3.8 -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+	python3.8 -m twine upload -r pypi dist/*
 
 .PHONY: clean
 clean:
