@@ -14,6 +14,7 @@
   - [Cut](#cut)
     - [AnypartCut](#anypartcut)
     - [SentenceCut](#sentencecut)
+    - [SubSentenceCut and Combine by threshold](#subsentencecut-and-combine-by-threshold)
     - [ChineseCharCut](#chinesecharcut)
     - [CombineBucket](#combinebucket)
   - [Enhancement](#enhancement)
@@ -280,6 +281,30 @@ print(sent_list)
 """
 ```
 
+#### SubSentenceCut and Combine by threshold
+
+```python
+from pnlp import cut_sub_sentence as pcss
+text = "你好！你好。你好？你坏~欢迎使用。"
+sent_list = pcss(text)
+print(sent_list)
+"""
+['你好！', '你好。', '你好？', '你坏~', '欢迎使用。']
+"""
+sent_list = pcss(text, 6)
+print(sent_list)
+"""
+['你好！你好。', '你好？你坏~', '欢迎使用。']
+"""
+sent_list = pcss(text, 12)
+print(sent_list)
+"""
+['你好！你好。你好？你坏~', '欢迎使用。']
+"""
+```
+
+This is very useful in some places, you knows;）
+
 #### ChineseCharCut
 
 ```python
@@ -540,6 +565,10 @@ $ python -m pytest
 ```
 
 ## ChangeLog
+
+**v0.4.11**
+
+Feat: Subsentence cut and combine with a given threshold.
 
 **v0.4.10**
 

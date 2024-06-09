@@ -118,10 +118,6 @@ def cut_part(text: str,
     return lst
 
 
-def cut_sentence(text: str) -> list:
-    return cut_part(text, psent, True, False)
-
-
 def combine_bucket(parts: list,
                    threshold: int,
                    truncate: bool = False,
@@ -173,3 +169,13 @@ def combine_bucket(parts: list,
             buckets.append([part])
     result = list(itertools.chain(*buckets))
     return result
+
+
+def cut_sentence(text: str) -> list:
+    return cut_part(text, psent, True, False)
+
+
+def cut_sub_sentence(text: str, threshold: int = 0) -> list:
+    parts = cut_part(text, psubsent, True, False)
+    res = combine_bucket(parts, threshold, False, False)
+    return res
