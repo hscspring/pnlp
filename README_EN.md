@@ -566,7 +566,7 @@ $ python -m pytest
 
 ## ChangeLog
 
-**v0.4.11**
+**v0.4.12**
 
 Feat: Subsentence cut and combine with a given threshold.
 

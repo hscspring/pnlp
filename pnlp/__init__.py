@@ -1,6 +1,6 @@
 from pnlp.piop import read_file, read_lines, read_json, read_yaml, read_csv, read_pickle, read_file_to_list_dict
 from pnlp.piop import write_file, write_json, write_pickle, check_dir, write_list_dict_to_file
-from pnlp.pcut import cut_sentence, cut_zhchar, cut_part, combine_bucket
+from pnlp.pcut import cut_sentence, cut_sub_sentence, cut_zhchar, cut_part, combine_bucket
 from pnlp.pcut import psent, psubsent
 
 from pnlp.piop import Reader, Dict
@@ -24,7 +24,7 @@ slsampler = SentenceLevelSampler()
 
 
 __title__ = "pnlp"
-__version__ = "0.4.10"
+__version__ = "0.4.12"
 __author__ = "Yam"
 __license__ = "Apache-2.0"
 __copyright__ = "Copyright 2019, 2020, 2021, 2022, 2023 Yam"
