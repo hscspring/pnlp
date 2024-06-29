@@ -8,11 +8,11 @@ from pnlp.ptxt import Regex, Text, Length
 from pnlp.pnorm import NumNorm
 from pnlp.penh import TokenLevelSampler, SentenceLevelSampler
 from pnlp.ptrans import pick_entity_from_bio_labels, generate_uuid
-from pnlp.pmag import MagicDict
+from pnlp.pmag import MagicDict, get_unique_fn
 from pnlp.stopwords import StopWords
 from pnlp.stopwords import chinese_stopwords, english_stopwords
 
-from pnlp.utils import pstr, concurring, divide2int
+from pnlp.utils import pstr, concurring, divide2int, run_in_new_thread
 from pnlp.utils import generate_batches_by_num, generate_batches_by_size
 
 
@@ -24,7 +24,7 @@ slsampler = SentenceLevelSampler()
 
 
 __title__ = "pnlp"
-__version__ = "0.4.12"
+__version__ = "0.4.13"
 __author__ = "Yam"
 __license__ = "Apache-2.0"
 __copyright__ = "Copyright 2019, 2020, 2021, 2022, 2023 Yam"

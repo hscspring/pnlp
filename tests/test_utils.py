@@ -1,10 +1,14 @@
 import re
+import os
+from functools import partial
 import math
 import itertools
 import pytest
 import multiprocessing as mp
 
 from pnlp.utils import pstr, concurring, generate_batches_by_num
+from pnlp.utils import run_in_new_thread
+from pnlp.piop import read_file, write_file
 
 
 def test_pstr1():
@@ -119,3 +123,33 @@ def test_concurring_invalid_workers():
             return res
     except Exception as err:
         assert "0" in str(err)
+
+
+
+def test_run_in_thread():
+    file = "run_in_new_thread.txt"
+    
+    def func(file, a, b, c):
+        write_file(file, list(map(str, [a, b, c])))
+
+    run_in_new_thread(func, file, 1, 2, 3)
+    import time
+    time.sleep(1)
+
+    assert os.path.exists(file)
+    os.remove(file)
+
+
+def test_run_in_thread_kwargs():
+    kwargs = {
+        "b": 2,
+        "c": 3,
+    }
+
+    def func(a, b, c):
+        return a + b + c
+
+    func = partial(func, **kwargs)
+
+    assert 6 == func(1)
+

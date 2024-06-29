@@ -493,6 +493,8 @@ Length of all numbers:  3
 
 ### Magic
 
+#### MagicDict
+
 ```python
 from pnlp import MagicDict
 
@@ -515,6 +517,14 @@ print(pmag.MagicDict.reverse(dx))
 """
 {'a': [1, 2, 3], 'b': 4}
 """
+```
+
+#### GetUniqueFileName
+
+```python
+from pnlp import get_unique_fn
+
+get_unique_fn("a/b/c.md") == "a_b_c.md"
 ```
 
 ### Concurring
@@ -556,6 +566,17 @@ def get_primes(lst):
 
 `concurring` wrapper just make your original function concurring.  
 
+### Background
+
+```python
+from pnlp import run_in_new_thread
+
+def func(file, a, b, c):
+    background_task()
+
+run_in_new_thread(func, file, 1, 2, 3)
+```
+
 ## Test
 
 Clone the repo run:
@@ -565,6 +586,10 @@ $ python -m pytest
 ```
 
 ## ChangeLog
+
+**v0.4.13**
+
+Feat: Background task and magic get unique file name from file path.
 
 **v0.4.12**
 

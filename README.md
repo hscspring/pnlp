@@ -498,6 +498,8 @@ Length of all numbers:  3
 
 ### 魔术方法
 
+#### 字典
+
 ```python
 from pnlp import MagicDict
 
@@ -520,6 +522,14 @@ print(pmag.MagicDict.reverse(dx))
 """
 {'a': [1, 2, 3], 'b': 4}
 """
+```
+
+#### 获取唯一文件名
+
+```python
+from pnlp import get_unique_fn
+
+get_unique_fn("a/b/c.md") == "a_b_c.md"
 ```
 
 ### 并行处理
@@ -560,6 +570,17 @@ def get_primes(lst):
 ```
 
 `concurring` 装饰器让你的迭代函数并行。
+
+### 后台处理
+
+```python
+from pnlp import run_in_new_thread
+
+def func(file, a, b, c):
+    background_task()
+
+run_in_new_thread(func, file, 1, 2, 3)
+```
 
 ## 测试
 

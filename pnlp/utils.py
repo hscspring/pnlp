@@ -145,3 +145,12 @@ def concurring(
             raise ValueError(err_info)
 
     return wrapper
+
+
+def run_in_new_thread(
+    func: Callable, *args, **kwargs
+):
+    if kwargs:
+        func = partial(func, **kwargs)
+    t = Thread(target=func, name="BackgroundRun", args=args)
+    t.start()

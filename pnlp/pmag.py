@@ -1,5 +1,6 @@
 from collections import Counter
 from addict import Dict
+from pathlib import Path
 
 
 class MagicDict(Dict):
@@ -46,3 +47,20 @@ class MagicDict(Dict):
                            else (x, d2[x])
                            for x in d1.keys()])
         return reversdict
+
+
+def get_unique_fn(file_path: str, level=0):
+    fp = Path(file_path)
+    fn = fp.name
+
+    file_path = str(file_path).strip("/")
+    tmp = file_path.split("/")[:-1]
+    length = len(tmp)
+    if level > length:
+        level = length
+
+    if length == 0:
+        return fn
+    
+    path = "_".join(tmp[-level:])
+    return "_".join([path, fn])

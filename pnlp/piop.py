@@ -212,6 +212,7 @@ def write_json(fpath: str, data, **kwargs) -> None:
     fout.close()
 
 
+
 def write_file(fpath: str, data, **kwargs) -> None:
     with open(fpath, "w", **kwargs) as fout:
         for line in data:
