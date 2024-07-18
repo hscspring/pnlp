@@ -17,7 +17,7 @@ psubsent = re.compile(
     |
     [。.！!?？…]+[”][。.!！?？…～~]?
     |
-    (?<=[ \u3000a-zA-Z"”》）)〉〕】>」』\u4e00-\u9fa5])[,，、:：；;。.!！?？…～~]+
+    (?<=[ \u3000a-zA-Z\d"”》）)〉〕】>」』\u4e00-\u9fa5])[,，、:：；;。.!！?？…～~]+
     ''', re.UNICODE | re.VERBOSE)
 # referenced from jieba
 punzh = pstr(Regex.pun_zh) - "-"  # for minus number eg -2

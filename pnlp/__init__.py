@@ -24,10 +24,10 @@ slsampler = SentenceLevelSampler()
 
 
 __title__ = "pnlp"
-__version__ = "0.4.13"
+__version__ = "0.4.14"
 __author__ = "Yam"
 __license__ = "Apache-2.0"
-__copyright__ = "Copyright 2019, 2020, 2021, 2022, 2023 Yam"
+__copyright__ = "Copyright 2019, 2020, 2021, 2022, 2023, 2024 Yam"
 __all__ = [
     "Reader",
     "Text", "Regex", "Length",
