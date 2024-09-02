@@ -587,6 +587,10 @@ $ python -m pytest
 
 ## ChangeLog
 
+**v0.4.14-15**
+
+Fix: Number as part of sub sentence.
+
 **v0.4.13**
 
 Feat: Background task and magic get unique file name from file path.

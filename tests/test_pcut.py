@@ -1,7 +1,7 @@
 import re
 import pytest
 
-from pnlp.pcut import cut_sentence, cut_zhchar, combine_bucket
+from pnlp.pcut import cut_sentence, cut_zhchar, combine_bucket, cut_sub_sentence
 
 
 def test_text2zhchar1():
@@ -369,3 +369,15 @@ def test_combine_bucket3(parts):
         '全和身体健康',
         '我们本着公开透明',
     ]
+
+
+
+@pytest.mark.parametrize("inp, expected", [
+    ("1,2,3,4", ["1,", "2,", "3,", "4"]),
+    ("2/5是0.4。", ["2/5是0.4。"]),
+    ("2/5是0.4.", ["2/5是0.4."]),
+    ("2除以8等于0.25。", ["2除以8等于0.25。"]),
+])
+def test_cut_subsent(inp, expected):
+    res = cut_sub_sentence(inp)
+    assert res == expected
