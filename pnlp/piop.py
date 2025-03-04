@@ -172,7 +172,7 @@ def read_csv(fpath: str, delimiter: str = ",") -> List:
 
 
 def read_json(fpath: str, **kwargs) -> Union[List, Dict]:
-    with open(fpath, "r") as fin:
+    with open(fpath, "r", encoding="utf-8") as fin:
         data = json.load(fin, **kwargs)
     return data
 

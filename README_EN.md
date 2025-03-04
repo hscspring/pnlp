@@ -587,6 +587,10 @@ $ python -m pytest
 
 ## ChangeLog
 
+**v0.4.16**
+
+Fix: `read_json` default use `UTF-8`.
+
 **v0.4.14-15**
 
 Fix: Number as part of sub sentence.
